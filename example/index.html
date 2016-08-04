@@ -6,6 +6,13 @@
 </head>
 <body>
   <canvas id="root"></canvas>
+  <div>
+    <select id="ganttType">
+      <option value="day" selected>Day</option>
+      <option value="week">Week</option>
+      <option value="month">Month</option>
+    </select>
+  </div>
   <script src="/index.js"></script>
   <script type="text/javascript">
     const gantt = new Gantt('root', [{
@@ -16,7 +23,7 @@
         id: 11,
         name: 'Requirements',
         from: new Date('2015-09-01 00:00:00'),
-        to: new Date('2015-09-12 00:00:00'),
+        to: new Date('2015-12-12 00:00:00'),
         percent: 50
       }, {
         id: 12,
@@ -66,6 +73,9 @@
         percent: 80
       }]
     }]);
+    document.getElementById('ganttType').addEventListener('change', function(e) {
+      gantt.setType(e.target.value);
+    }, false);
   </script>
 </body>
 </html>

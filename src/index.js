@@ -49,6 +49,17 @@ export default class Gantt {
     this.layout();
     this.render();
   }
+  setType(t) {
+    this.options.type = t;
+    this.layout();
+    this.render();
+  }
+  setData(data) {
+    this.data = data;
+    this.preHandle();
+    this.layout();
+    this.render();
+  }
   preHandle() {
     const {font, padX} = this.options;
 
