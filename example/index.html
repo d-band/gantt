@@ -12,6 +12,7 @@
       <option value="week">Week</option>
       <option value="month">Month</option>
     </select>
+    <a id="download" href="#">Download</a>
   </div>
   <script src="/index.js"></script>
   <script type="text/javascript">
@@ -75,6 +76,15 @@
     }]);
     document.getElementById('ganttType').addEventListener('change', function(e) {
       gantt.setType(e.target.value);
+    }, false);
+
+    function download(link, canvasId, filename) {
+      link.href = document.getElementById(canvasId).toDataURL();
+      link.download = filename;
+    }
+
+    document.getElementById('download').addEventListener('click', function() {
+      download(this, 'root', 'gantt-chart.png');
     }, false);
   </script>
 </body>
