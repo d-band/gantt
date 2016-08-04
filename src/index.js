@@ -134,13 +134,13 @@ export default class Gantt {
     ctx.translate(10, 10);
 
     // 1. Draw outlines
-    ctx.beginPath();
     ctx.strokeStyle = lineColor;
+    ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(width, 0);
     ctx.lineTo(width, height);
     ctx.lineTo(0, height);
-    ctx.lineTo(0, 0);
+    ctx.closePath();
     ctx.moveTo(textWidth, 0);
     ctx.lineTo(textWidth, height);
     ctx.moveTo(0, cellHeight * 2);
@@ -154,6 +154,10 @@ export default class Gantt {
     }
     ctx.stroke();
     // 2. Draw header text
+    ctx.font = font;
+    ctx.fillStyle = hColor;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
     if (type === 'day') {
       const counts = {};
       const dates = [];
@@ -166,10 +170,6 @@ export default class Gantt {
           counts[key] = 1;
           dates.push(cur);
         }
-        ctx.font = font;
-        ctx.fillStyle = hColor;
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
         ctx.fillText(cur.getDate(), textWidth + (i + 0.5) * cellWidth, cellHeight * 1.5);
       }
       let offset = textWidth;
@@ -187,13 +187,7 @@ export default class Gantt {
         ctx.stroke();
       }
     } else {
-      const counts = {};
-      const dates = [];
       for (let i = 0; i < col; i++) {
-        ctx.font = font;
-        ctx.fillStyle = hColor;
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
         ctx.fillText(i + 1, textWidth + (i + 0.5) * cellWidth, cellHeight * 1.5);
       }
       for (let i = 0; i + 4 <= col; i += 4) {
@@ -210,6 +204,15 @@ export default class Gantt {
         ctx.lineTo(offset, cellHeight);
         ctx.stroke();
       }
+    }
+    const diff = (new Date() - minDate) / TYPE[type];
+    if (diff > 0) {
+      const offset = textWidth + diff * cellWidth;
+      ctx.strokeStyle = '#f50';
+      ctx.beginPath();
+      ctx.moveTo(offset, cellHeight * 2);
+      ctx.lineTo(offset, height);
+      ctx.stroke();
     }
     // 3. Draw left side & progress
     let offsetY = cellHeight * 2;
@@ -230,7 +233,6 @@ export default class Gantt {
       ctx.font = `bold ${font}`;
       ctx.fillStyle = color;
       ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
       ctx.fillText(group.name, padX, offsetY + H / 2);
       if (group.from && group.to) {
         progress(group, barColor1);
