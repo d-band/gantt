@@ -41,6 +41,21 @@ export function formatDate(date, format = 'YYYY-MM-dd') {
     .replace('dd', padLeft(d, '00'));
 }
 
+export function getMouseXY(element, e) {
+  var rect = element.getBoundingClientRect();
+  return {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
+  };
+}
+
+export function hitsElement(element, x, y) {
+  return (
+    x >= element.x && x <= element.x + element.width &&
+    y >= element.y && y <= element.y + element.height
+  );
+}
+
 export function startOfWeek(d, day, before = true) {
   let diff = d.getDay() - day;
   if (diff < 0) {

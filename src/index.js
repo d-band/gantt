@@ -1,5 +1,5 @@
 import './hidpi-canvas';
-import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate } from './utils';
+import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate, getMouseXY, hitsElement} from './utils';
 
 const DAY = 24 * 60 * 60 * 1000;
 const TYPE = {
@@ -48,6 +48,7 @@ export default class Gantt {
     this.preHandle();
     this.layout();
     this.render();
+    this.initBind();
   }
   setType(t) {
     this.options.type = t;
@@ -59,6 +60,24 @@ export default class Gantt {
     this.preHandle();
     this.layout();
     this.render();
+  }
+  initBind() {
+    const self = this;
+    this.root.addEventListener('click', function(e) {
+      let {x, y} = getMouseXY(this, e);
+      let isHit = false;
+      self.data.forEach(function(group) {
+        if (hitsElement(group, x - 10, y - 10)) {
+          isHit = true;
+          group.collapse = !group.collapse;
+        }
+      });
+      if (isHit) {
+        self.preHandle();
+        self.layout();
+        self.render();
+      }
+    }, false);
   }
   preHandle() {
     const {font, padX} = this.options;
@@ -234,6 +253,12 @@ export default class Gantt {
       ctx.fillStyle = color;
       ctx.textAlign = 'left';
       ctx.fillText(group.name, padX, offsetY + H / 2);
+      // Set group position for hit test
+      group.x = 0;
+      group.y = offsetY;
+      group.width = textWidth;
+      group.height = H;
+
       if (group.from && group.to) {
         progress(group, barColor1);
       }
