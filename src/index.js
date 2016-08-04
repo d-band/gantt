@@ -1,5 +1,5 @@
 import './hidpi-canvas';
-import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate, getMouseXY, hitsElement} from './utils';
+import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate, getMouseXY, hitsElement } from './utils';
 
 const DAY = 24 * 60 * 60 * 1000;
 const TYPE = {
@@ -64,7 +64,7 @@ export default class Gantt {
   initBind() {
     const self = this;
     this.root.addEventListener('click', function(e) {
-      let {x, y} = getMouseXY(this, e);
+      let { x, y } = getMouseXY(this, e);
       let isHit = false;
       self.data.forEach(function(group) {
         if (hitsElement(group, x - 10, y - 10)) {
@@ -80,7 +80,7 @@ export default class Gantt {
     }, false);
   }
   preHandle() {
-    const {font, padX} = this.options;
+    const { font, padX } = this.options;
 
     let maxDate = null;
     let minDate = null;
@@ -129,8 +129,8 @@ export default class Gantt {
     this.textWidth = textWidth + padX * 2;
   }
   layout() {
-    const {row, minDate, maxDate, textWidth} = this;
-    const {type, fontSize, padY, cellWidth, cellHeight} = this.options;
+    const { row, minDate, maxDate, textWidth } = this;
+    const { type, fontSize, padY, cellWidth, cellHeight } = this.options;
     const H = fontSize + padY * 2;
     const col = Math.ceil((maxDate - minDate) / TYPE[type]);
 
@@ -143,9 +143,9 @@ export default class Gantt {
     this.ctx = this.root.getContext('2d');
   }
   render() {
-    const {ctx, width, height, row, col, textWidth, minDate, maxDate} = this;
-    const {type, font, cellWidth, cellHeight, padX, padY, fontSize} = this.options;
-    const {color, lineColor, hColor, barColor1, barColor2, barBgColor} = this.options;
+    const { ctx, width, height, row, col, textWidth, minDate, maxDate } = this;
+    const { type, font, cellWidth, cellHeight, padX, padY, fontSize } = this.options;
+    const { color, lineColor, hColor, barColor1, barColor2, barBgColor } = this.options;
     const H = fontSize + padY * 2;
 
     ctx.fillStyle = '#fff';

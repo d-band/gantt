@@ -55,12 +55,3 @@ export function hitsElement(element, x, y) {
     y >= element.y && y <= element.y + element.height
   );
 }
-
-export function startOfWeek(d, day, before = true) {
-  let diff = d.getDay() - day;
-  if (diff < 0) {
-    diff += 7;
-  }
-  d.setHours(0, 0, 0, 0);
-  return addDays(d, before ? -diff : 7 - diff);
-}
