@@ -1,4 +1,3 @@
-import './hidpi-canvas';
 import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate, getMouseXY, hitsElement } from './utils';
 
 const DAY = 24 * 60 * 60 * 1000;
