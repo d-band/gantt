@@ -12,7 +12,7 @@ export function addDays(d, days) {
 }
 
 export function getMinDate(...dates) {
-  let temp = dates.filter(d => d !== null);
+  let temp = dates.filter(d => d);
   if (temp.length) {
     return new Date(Math.min.apply(null, temp));
   }
@@ -20,7 +20,7 @@ export function getMinDate(...dates) {
 }
 
 export function getMaxDate(...dates) {
-  let temp = dates.filter(d => d !== null);
+  let temp = dates.filter(d => d);
   if (temp.length) {
     return new Date(Math.max.apply(null, temp));
   }
