@@ -56,7 +56,7 @@ $ dool server
 $ dool build
 ```
 
-## Options
+## Options & API
 
 ```
 // Default options
@@ -76,6 +76,10 @@ $ dool build
   barBgColor: '#e9e9e9'
 }
 ```
+
+- setType(type): change gantt chart style `day|week|month`
+- setData(data): change gantt data
+- toBlob(callback, type, quality): gantt chart to Blob data
 
 ## Report a issue
 
