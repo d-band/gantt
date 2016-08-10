@@ -31,6 +31,7 @@ export default class Gantt {
       type: 'day',
       fontSize: 14,
       fontFamily: 'Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif',
+      pad: 10,
       padX: 10,
       padY: 10,
       cellWidth: 28,
@@ -66,11 +67,12 @@ export default class Gantt {
   }
   initBind() {
     const self = this;
+    const { pad } = this.options;
     this.root.addEventListener('click', function(e) {
       let { x, y } = getMouseXY(this, e);
       let isHit = false;
       self.data.forEach(function(group) {
-        if (hitsElement(group, x - 10, y - 10)) {
+        if (hitsElement(group, x - pad, y - pad)) {
           isHit = true;
           group.collapse = !group.collapse;
         }
@@ -133,7 +135,7 @@ export default class Gantt {
   }
   layout() {
     const { row, minDate, maxDate, textWidth } = this;
-    const { type, fontSize, padY, cellWidth, cellHeight } = this.options;
+    const { type, fontSize, pad, padY, cellWidth, cellHeight } = this.options;
     const H = fontSize + padY * 2;
     const col = Math.ceil((maxDate - minDate) / TYPE[type]);
 
@@ -141,19 +143,19 @@ export default class Gantt {
     this.width = cellWidth * col + textWidth;
     this.height = cellHeight * 2 + row * H;
     // resize canvas
-    this.root.width = this.width + 20;
-    this.root.height = this.height + 20;
+    this.root.width = this.width + pad * 2;
+    this.root.height = this.height + pad * 2;
     this.ctx = this.root.getContext('2d');
   }
   render() {
     const { ctx, width, height, row, col, textWidth, minDate, maxDate } = this;
-    const { type, font, cellWidth, cellHeight, padX, padY, fontSize } = this.options;
+    const { type, font, cellWidth, cellHeight, pad, padX, padY, fontSize } = this.options;
     const { color, lineColor, hColor, barColor1, barColor2, barBgColor } = this.options;
     const H = fontSize + padY * 2;
 
     ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, width + 21, height + 21);
-    ctx.translate(10, 10);
+    ctx.fillRect(0, 0, width + pad * 2, height + pad * 2);
+    ctx.translate(pad, pad);
 
     // 1. Draw outlines
     ctx.strokeStyle = lineColor;
