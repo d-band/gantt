@@ -1,3 +1,4 @@
+import './blob';
 import { getTextWidth, addDays, getMinDate, getMaxDate, formatDate, getMouseXY, hitsElement } from './utils';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -59,6 +60,9 @@ export default class Gantt {
     this.preHandle();
     this.layout();
     this.render();
+  }
+  toBlob(callback, type, quality) {
+    this.root.toBlob(callback, type, quality);
   }
   initBind() {
     const self = this;
