@@ -1,6 +1,6 @@
 {
   "name": "gantt",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "gantt chart with canvas",
   "main": "dist/index.js",
   "entry": {
