@@ -1,85 +1,80 @@
 Gantt Chart
-=====
+===========
+
+> Gantt chart library using jsx support SVG, Canvas and SSR
 
 [![NPM version](https://img.shields.io/npm/v/gantt.svg)](https://www.npmjs.com/package/gantt)
 [![NPM downloads](https://img.shields.io/npm/dm/gantt.svg)](https://www.npmjs.com/package/gantt)
+[![Greenkeeper badge](https://badges.greenkeeper.io/d-band/gantt.svg)](https://greenkeeper.io/)
 
 ## Install
 
 ```bash
-$ npm install gantt
+$ npm install gantt --save
 ```
 
 ## Usage
 
-[Example](example/)
+```javascript
+import { SVGGantt, CanvasGantt, StrGantt } from 'gantt';
 
-```
-var Gantt = require('gantt');
-
-var data = [{
+const data = [{
   id: 1,
   name: 'group 1',
-  collapse: false,
   children: [{
     id: 11,
     name: 'task 11',
     from: new Date('2015-09-01 00:00:00'),
     to: new Date('2015-09-12 00:00:00'),
-    percent: 50
-  }]
-}, {
-  id: 2,
-  name: 'group 2',
-  children: [{
-    id: 21,
-    name: 'task 21',
-    from: new Date('2015-09-07 00:00:00'),
-    to: new Date('2015-9-10 00:00:00'),
-    percent: 20
+    percent: 0.5
   }]
 }];
 
-var gantt = new Gantt('root', data, options);
+new SVGGantt('#svg-root', data, {
+  viewMode: 'week'
+});
+
+new CanvasGantt('#canvas-root', data, {
+  viewMode: 'week'
+});
+
+const strGantt = new StrGantt(data, {
+  viewMode: 'week'
+});
+this.body = strGantt.render();
 ```
 
-![image](example/image.png)
+![image](demo/image.png)
 
+## Options
 
-## Develop
-
-```
-# Dev
-$ dool server
-
-# Build
-$ dool build
-```
-
-## Options & API
-
-```
-// Default options
+```javascript
 {
-  type: 'day',
-  fontSize: 14,
-  fontFamily: 'Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif',
-  padX: 10,
-  padY: 10,
-  cellWidth: 28,
-  cellHeight: 28,
-  color: '#555',
-  lineColor: '#e9e9e9',
-  hColor: '#999',
-  barColor1: '#2db7f5',
-  barColor2: '#87d068',
-  barBgColor: '#e9e9e9'
+  // View mode: day/week/month
+  viewMode: 'week',
+  offsetY: 60,
+  rowHeight: 40,
+  barHeight: 16,
+  thickWidth: 1.4,
+  footerHeight: 50,
+  styleOptions: {
+    BG: '#fff',
+    groupBG: '#f5f5f5',
+    lineColor: '#eee',
+    redLineColor: '#f04134',
+    baseBar: '#b8c2cc',
+    greenBar: '#00a854',
+    redBar: '#f04134',
+    textColor: '#222',
+    lightTextColor: '#999',
+    lineWidth: '1px',
+    thickLineWidth: '1.4px',
+    fontSize: '14px',
+    smallFontSize: '12px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+  }
 }
 ```
-
-- setType(type): change gantt chart style `day|week|month`
-- setData(data): change gantt data
-- toBlob(callback, type, quality): gantt chart to Blob data
 
 ## Report a issue
 
@@ -88,4 +83,4 @@ $ dool build
 
 ## License
 
-gantt is available under the terms of the MIT License.
+Gantt is available under the terms of the MIT License.

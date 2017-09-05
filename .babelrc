@@ -1,0 +1,20 @@
+{
+  "presets": ["stage-2"],
+  "plugins": [
+    ["transform-react-jsx", {
+      "pragma": "h"
+    }]
+  ],
+  "env": {
+    "cjs": {
+      "presets": ["env"]
+    },
+    "es": {
+      "presets": [
+        ["env", {
+          "modules": false
+        }]
+      ]
+    }
+  }
+}

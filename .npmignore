@@ -1,8 +1,0 @@
-.idea
-.DS_Store
-Thumbs.db
-tmp
-
-node_modules
-coverage
-.nyc_output

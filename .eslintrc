@@ -1,0 +1,23 @@
+parser: babel-eslint
+extends: airbnb
+
+env:
+  mocha: true
+  browser: true
+
+settings:
+  react:
+    pragma: h
+
+rules:
+  max-len: ["error", 160]
+  camelcase: 0
+  no-plusplus: 0
+  no-return-await: 0
+  no-mixed-operators: 0
+  comma-dangle: 0
+  react/sort-comp: 0
+  react/prop-types: 0
+  react/forbid-prop-types: 0
+  react/jsx-filename-extension: 0
+  react/no-array-index-key: 0

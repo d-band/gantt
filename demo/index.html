@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gantt Chart Demo</title>
+</head>
+<body>
+  <select id="viewMode" style="margin: 20px 0;height: 30px;width: 180px;">
+    <option value="day">Day</option>
+    <option value="week" selected>Week</option>
+    <option value="month">Month</option>
+  </select>
+  <div id="svg"></div>
+  <canvas id="canvas"></canvas>
+  <pre id="str" style="width: 800px;overflow-x: scroll;background-color: #eee;"></pre>
+  <script src="./dist/index.js"></script>
+</body>
+</html>

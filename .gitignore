@@ -1,10 +1,30 @@
-.idea
+*.iml
+.idea/
+.ipr
+.iws
+*~
+~*
+*.diff
+*.patch
+*.bak
 .DS_Store
 Thumbs.db
-tmp
+.project
+.*proj
+.svn/
+*.swp
+*.swo
+*.log
+*.sublime-project
+*.sublime-workspace
+.buildpath
+.settings
 
-node_modules
 coverage
 .nyc_output
+package-lock.json
 
-dist/
+es/
+lib/
+node_modules
+demo/dist
