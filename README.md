@@ -15,6 +15,8 @@ $ npm install gantt --save
 
 ## Usage
 
+[View demo online](https://d-band.github.io/gantt/)
+
 ```javascript
 import { SVGGantt, CanvasGantt, StrGantt } from 'gantt';
 
