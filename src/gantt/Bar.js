@@ -23,7 +23,7 @@ export default function Bar({ styles, data, unit, height, offsetY, minTime, rowH
             <text x={x - 4} y={TY} style={styles.text1}>{formatDay(new Date(v.from))}</text>
             <text x={x + w1 + 4} y={TY} style={styles.text2}>{formatDay(new Date(v.to))}</text>
             <rect x={x} y={y} width={w1} height={barHeight} rx={1.8} ry={1.8} style={styles.bar} />
-            <rect x={x} y={y} width={w2} height={barHeight} rx={1.8} ry={1.8} style={styles[type]} />
+            {w2 > 0.000001 ? <rect x={x} y={y} width={w2} height={barHeight} rx={1.8} ry={1.8} style={styles[type]} /> : null}
           </g>
         );
       })}

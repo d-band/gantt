@@ -1,6 +1,6 @@
 {
   "name": "gantt",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Gantt chart library using jsx support SVG, Canvas and SSR",
   "main": "lib/index.js",
   "module": "es/index.js",
