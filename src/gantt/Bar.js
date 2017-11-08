@@ -1,7 +1,9 @@
 import h from '../h';
 import { formatDay } from '../utils';
 
-export default function Bar({ styles, data, unit, height, offsetY, minTime, rowHeight, barHeight, footerHeight, maxTextWidth, current }) {
+export default function Bar({
+  styles, data, unit, height, offsetY, minTime, rowHeight, barHeight, footerHeight, maxTextWidth, current, onClick
+}) {
   const x0 = maxTextWidth;
   const y0 = (rowHeight - barHeight) / 2 + offsetY;
   const cur = x0 + (current - minTime) / unit;
@@ -19,10 +21,10 @@ export default function Bar({ styles, data, unit, height, offsetY, minTime, rowH
           type = 'red';
         }
         return (
-          <g key={i}>
+          <g key={i} style={{ cursor: 'pointer' }}>
             <text x={x - 4} y={TY} style={styles.text1}>{formatDay(new Date(v.from))}</text>
             <text x={x + w1 + 4} y={TY} style={styles.text2}>{formatDay(new Date(v.to))}</text>
-            <rect x={x} y={y} width={w1} height={barHeight} rx={1.8} ry={1.8} style={styles.bar} />
+            <rect x={x} y={y} width={w1} height={barHeight} rx={1.8} ry={1.8} style={styles.bar} onClick={() => onClick(v)} />
             {w2 > 0.000001 ? <rect x={x} y={y} width={w2} height={barHeight} rx={1.8} ry={1.8} style={styles[type]} /> : null}
           </g>
         );

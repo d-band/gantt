@@ -1,4 +1,4 @@
-export default function render(vnode, ctx) {
+export default function render(vnode, ctx, e) {
   const { tag, props, children } = vnode;
   if (tag === 'svg') {
     const { width, height } = props;
@@ -6,7 +6,9 @@ export default function render(vnode, ctx) {
     ctx.height = height;
   }
   if (tag === 'line') {
-    const { x1, x2, y1, y2, style = {} } = props;
+    const {
+      x1, x2, y1, y2, style = {}
+    } = props;
     if (style.stroke) {
       ctx.strokeStyle = style.stroke;
       ctx.lineWidth = parseFloat(style['stroke-width'] || 1);
@@ -17,7 +19,9 @@ export default function render(vnode, ctx) {
     ctx.stroke();
   }
   if (tag === 'rect') {
-    const { x, y, width, height, rx = 0, ry = 0, style = {} } = props;
+    const {
+      x, y, width, height, rx = 0, ry = 0, onClick, style = {}
+    } = props;
 
     // From https://github.com/canvg/canvg
     ctx.beginPath();
@@ -30,6 +34,9 @@ export default function render(vnode, ctx) {
     ctx.quadraticCurveTo(x, y + height, x, y + height - ry);
     ctx.lineTo(x, y + ry);
     ctx.quadraticCurveTo(x, y, x + rx, y);
+    if (e && onClick && ctx.isPointInPath(e.x, e.y)) {
+      onClick();
+    }
     ctx.closePath();
 
     if (style.fill) {
@@ -67,7 +74,7 @@ export default function render(vnode, ctx) {
 
   children.forEach((v) => {
     if (typeof v !== 'string') {
-      render(v, ctx);
+      render(v, ctx, e);
     }
   });
 }

@@ -1,6 +1,8 @@
 import h from '../h';
 
-export default function Grid({ styles, data, width, height, offsetY, thickWidth, rowHeight, footerHeight, maxTextWidth }) {
+export default function Grid({
+  styles, data, width, height, offsetY, thickWidth, rowHeight, footerHeight, maxTextWidth
+}) {
   const W = width - thickWidth * 2;
   const H = height - footerHeight;
   return (

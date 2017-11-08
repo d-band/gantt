@@ -1,6 +1,8 @@
 import h from '../h';
 
-export default function Labels({ styles, data, rowHeight, offsetY }) {
+export default function Labels({
+  styles, data, rowHeight, offsetY
+}) {
   return (
     <g>
       {data.map((v, i) => (
@@ -11,7 +13,8 @@ export default function Labels({ styles, data, rowHeight, offsetY }) {
           style={
             v.group ? styles.groupLabel : styles.label
           }
-        >{v.name}</text>
+        >{v.name}
+        </text>
       ))}
     </g>
   );

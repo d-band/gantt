@@ -2,7 +2,9 @@ import h from '../h';
 import { getDates } from '../utils';
 import Year from './Year';
 
-export default function MonthHeader({ styles, unit, minTime, maxTime, offsetY, maxTextWidth }) {
+export default function MonthHeader({
+  styles, unit, minTime, maxTime, offsetY, maxTextWidth
+}) {
   const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const dates = getDates(minTime, maxTime);
   const months = dates.filter(v => (new Date(v)).getDate() === 1);

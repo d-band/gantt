@@ -1,6 +1,8 @@
 import h from '../h';
 
-export default function Layout({ styles, width, height, offsetY, thickWidth, maxTextWidth }) {
+export default function Layout({
+  styles, width, height, offsetY, thickWidth, maxTextWidth
+}) {
   const x0 = thickWidth / 2;
   const W = width - thickWidth;
   const H = height - thickWidth;

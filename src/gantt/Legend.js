@@ -1,6 +1,8 @@
 import h from '../h';
 
-export default function Legend({ styles, legends, width, height, barHeight, footerHeight }) {
+export default function Legend({
+  styles, legends, width, height, barHeight, footerHeight
+}) {
   const W = 100;
   const len = legends.length;
   return (

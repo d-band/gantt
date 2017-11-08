@@ -9,6 +9,10 @@ function applyProperties(node, props) {
         // eslint-disable-next-line
         node.style[sk] = v[sk];
       });
+    } else if (k === 'onClick' && typeof v === 'function') {
+      node.addEventListener('click', () => {
+        v();
+      });
     } else {
       node.setAttribute(k, v);
     }
@@ -24,9 +28,7 @@ export default function render(vnode, ctx) {
   }
 
   children.forEach((v) => {
-    node.appendChild(
-      typeof v === 'string' ? doc.createTextNode(v) : render(v, ctx)
-    );
+    node.appendChild(typeof v === 'string' ? doc.createTextNode(v) : render(v, ctx));
   });
   return node;
 }

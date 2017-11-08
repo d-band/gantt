@@ -2,7 +2,9 @@ import h from '../h';
 import { getDates } from '../utils';
 import YearMonth from './YearMonth';
 
-export default function DayHeader({ styles, unit, minTime, maxTime, height, offsetY, maxTextWidth, footerHeight }) {
+export default function DayHeader({
+  styles, unit, minTime, maxTime, height, offsetY, maxTextWidth, footerHeight
+}) {
   const dates = getDates(minTime, maxTime);
   const ticks = [];
   const x0 = maxTextWidth;

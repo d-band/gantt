@@ -27,4 +27,4 @@ package-lock.json
 es/
 lib/
 node_modules
-demo/dist
+demo/bundle.js

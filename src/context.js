@@ -22,5 +22,13 @@ export default function createContext(dom) {
       configurable: true
     });
   });
+  canvas.addEventListener('click', (e) => {
+    if (!ctx.onClick) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.onClick({
+      x: (e.clientX - rect.left) * ratio,
+      y: (e.clientY - rect.top) * ratio
+    });
+  });
   return ctx;
 }

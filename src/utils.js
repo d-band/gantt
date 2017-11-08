@@ -46,6 +46,7 @@ export function formatData(data) {
     }
 
     list.push({
+      id: v.id,
       group: true,
       name: v.name,
       from: min,
@@ -54,6 +55,7 @@ export function formatData(data) {
     });
     v.children.forEach((c) => {
       list.push({
+        id: c.id,
         name: c.name,
         from: c.from.getTime(),
         to: c.to.getTime(),

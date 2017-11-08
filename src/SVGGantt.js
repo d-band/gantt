@@ -26,9 +26,7 @@ export default class SVGGantt {
     }
     if (!options.maxTextWidth) {
       const font = getFont(options.styleOptions || {});
-      options.maxTextWidth = Math.max.apply(null, data.map(
-        v => textWidth(v.name, font, 20)
-      ));
+      options.maxTextWidth = Math.max.apply(null, data.map(v => textWidth(v.name, font, 20)));
     }
     this.tree = render(<Gantt data={data} {...options} />);
     this.dom.appendChild(this.tree);

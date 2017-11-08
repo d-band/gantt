@@ -11,6 +11,7 @@ export default class CanvasGantt {
     this.data = formatData(data);
     this.options = options;
     this.render();
+    this.ctx.onClick = e => this.render(e);
   }
   setData(data) {
     this.data = formatData(data);
@@ -20,14 +21,12 @@ export default class CanvasGantt {
     this.options = { ...this.options, ...options };
     this.render();
   }
-  render() {
+  render(e) {
     const { data, options } = this;
     if (!options.maxTextWidth) {
       const font = getFont(options.styleOptions || {});
-      options.maxTextWidth = Math.max.apply(null, data.map(
-        v => textWidth(v.name, font, 20)
-      ));
+      options.maxTextWidth = Math.max.apply(null, data.map(v => textWidth(v.name, font, 20)));
     }
-    render(<Gantt data={data} {...options} />, this.ctx);
+    render(<Gantt data={data} {...options} />, this.ctx, e);
   }
 }

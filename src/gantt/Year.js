@@ -1,6 +1,8 @@
 import h from '../h';
 
-export default function Year({ styles, months, unit, offsetY, minTime, maxTime, maxTextWidth }) {
+export default function Year({
+  styles, months, unit, offsetY, minTime, maxTime, maxTextWidth
+}) {
   const years = months.filter(v => (new Date(v)).getMonth() === 0);
 
   years.unshift(minTime);

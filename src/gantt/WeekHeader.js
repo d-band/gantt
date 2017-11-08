@@ -2,7 +2,9 @@ import h from '../h';
 import { getDates, addDays, DAY } from '../utils';
 import YearMonth from './YearMonth';
 
-export default function WeekHeader({ styles, unit, minTime, maxTime, height, offsetY, maxTextWidth, footerHeight }) {
+export default function WeekHeader({
+  styles, unit, minTime, maxTime, height, offsetY, maxTextWidth, footerHeight
+}) {
   const dates = getDates(minTime, maxTime);
   const weeks = dates.filter(v => (new Date(v)).getDay() === 0);
   weeks.push(maxTime);

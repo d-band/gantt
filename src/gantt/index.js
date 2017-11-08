@@ -25,9 +25,11 @@ const UNIT = {
   week: 7 * DAY / 56,
   month: 30 * DAY / 56
 };
+function NOOP() {}
 
 export default function Gantt({
   data = [],
+  onClick = NOOP,
   viewMode = 'week',
   maxTextWidth = 140,
   offsetY = 60,
@@ -112,6 +114,7 @@ export default function Gantt({
         current={current}
         offsetY={offsetY}
         minTime={minTime}
+        onClick={onClick}
         rowHeight={rowHeight}
         barHeight={barHeight}
         maxTextWidth={maxTextWidth}
