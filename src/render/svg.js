@@ -9,10 +9,10 @@ function applyProperties(node, props) {
         // eslint-disable-next-line
         node.style[sk] = v[sk];
       });
-    } else if (k === 'onClick' && typeof v === 'function') {
-      node.addEventListener('click', () => {
-        v();
-      });
+    } else if (k === 'onClick') {
+      if (typeof v === 'function' && node.tagName === 'g') {
+        node.addEventListener('click', v);
+      }
     } else {
       node.setAttribute(k, v);
     }
