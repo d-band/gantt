@@ -20,6 +20,7 @@ export default function render(vnode, ctx) {
 
   Object.keys(props || {}).forEach((k) => {
     let v = props[k];
+    if (k === 'onClick') return;
     if (k === 'style' && typeof v === 'object') {
       v = Object.keys(v).map(i => `${i}:${v[i]};`).join('');
     }

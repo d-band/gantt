@@ -54,6 +54,7 @@ this.body = strGantt.render();
 {
   // View mode: day/week/month
   viewMode: 'week',
+  onClick: (item) => {},
   offsetY: 60,
   rowHeight: 40,
   barHeight: 16,
