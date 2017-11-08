@@ -2,18 +2,16 @@ import {
   SVGGantt,
   CanvasGantt,
   StrGantt
-} from '../lib';
+} from '../src';
 
 const data = getData();
-const svgGantt = new SVGGantt('#svg', data, {
-  viewMode: 'week'
-});
-const canvasGantt = new CanvasGantt('#canvas', data, {
-  viewMode: 'week'
-});
-const strGantt = new StrGantt(data, {
-  viewMode: 'week'
-});
+const options = {
+  viewMode: 'week',
+  onClick: v => console.log(v)
+};
+const svgGantt = new SVGGantt('#svg', data, options);
+const canvasGantt = new CanvasGantt('#canvas', data, options);
+const strGantt = new StrGantt(data, options);
 
 function renderStr() {
   const dom = document.querySelector('#str');
