@@ -1,6 +1,6 @@
 {
   "name": "gantt",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Gantt chart library using jsx support SVG, Canvas and SSR",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,14 +8,16 @@
   "files": [
     "lib",
     "es",
-    "src"
+    "src",
+    "dist"
   ],
   "scripts": {
     "lint": "eslint src",
-    "clean": "rimraf lib es",
+    "clean": "rimraf lib es dist",
     "build:lib": "cross-env BABEL_ENV=cjs babel src -d lib",
     "build:es": "cross-env BABEL_ENV=es babel src -d es",
-    "build": "npm run clean && npm run build:lib && npm run build:es",
+    "build:dist": "cross-env NODE_ENV=production rollup -c && uglifyjs -o dist/gantt.min.js dist/gantt.js",
+    "build": "npm run clean && npm run build:lib && npm run build:es && npm run build:dist",
     "prepublish": "npm run build",
     "pages": "cd demo && dool build && gh-pages -d ."
   },
@@ -41,7 +43,9 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^5.0.5",
@@ -51,6 +55,11 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
     "gh-pages": "^1.0.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "rollup": "^0.57.0",
+    "rollup-plugin-babel": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "uglify-js": "^3.3.16"
   }
 }
