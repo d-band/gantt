@@ -10,12 +10,13 @@ export function getFont({
 
 export default function getStyles({
   BG = '#fff',
-  groupBG = '#f5f5f5',
+  groupBg = '#f5f5f5',
   lineColor = '#eee',
   redLineColor = '#f04134',
   baseBar = '#b8c2cc',
-  greenBar = '#00a854',
-  redBar = '#f04134',
+  greenBar = '#52c41a',
+  groupBar = '#52c41a',
+  redBar = '#ed7f2c',
   textColor = '#222',
   lightTextColor = '#999',
   lineWidth = '1px',
@@ -57,8 +58,8 @@ export default function getStyles({
     line,
     cline: redLine,
     bline: thickLine,
-    group: {
-      fill: groupBG
+    groupBg: {
+      fill: groupBg
     },
     label: text,
     groupLabel: {
@@ -87,6 +88,9 @@ export default function getStyles({
     },
     red: {
       fill: redBar
+    },
+    group: {
+      fill: groupBar
     }
   };
 }

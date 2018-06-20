@@ -12,10 +12,10 @@ import getStyles from './styles';
 
 const LEGENDS = [{
   type: 'bar',
-  name: 'Planning'
+  name: 'Remaining'
 }, {
   type: 'green',
-  name: 'Actual'
+  name: 'Completed'
 }, {
   type: 'red',
   name: 'Delay'

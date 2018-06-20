@@ -20,6 +20,9 @@ export default function Bar({
         if ((x + w2) < cur && v.percent < 0.999999) {
           type = 'red';
         }
+        if (v.group) {
+          type = 'group';
+        }
         const handler = () => onClick(v);
         return (
           <g key={i} style={{ cursor: 'pointer' }} onClick={handler}>

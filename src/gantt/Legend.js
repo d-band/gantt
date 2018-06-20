@@ -14,7 +14,7 @@ export default function Legend({
         return (
           <g key={i}>
             <rect x={x} y={RY} width={barHeight} height={barHeight} style={styles[v.type]} />
-            <text x={x + barHeight + 10} y={y} style={styles.label}>{v.name}</text>
+            <text x={x + barHeight + 5} y={y} style={styles.label}>{v.name}</text>
           </g>
         );
       })}

@@ -10,7 +10,7 @@ export default function Grid({
       {data.map((v, i) => {
         if (!v.group) return null;
         const y = i * rowHeight + offsetY;
-        return <rect x={thickWidth} y={y} width={W} height={rowHeight} style={styles.group} />;
+        return <rect x={thickWidth} y={y} width={W} height={rowHeight} style={styles.groupBg} />;
       })}
       {data.map((v, i) => {
         const y = (i + 1) * rowHeight + offsetY;
