@@ -22,7 +22,7 @@
 	});
 
 	var _core = createCommonjsModule(function (module) {
-	var core = module.exports = { version: '2.5.4' };
+	var core = module.exports = { version: '2.5.7' };
 	if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 	});
 	var _core_1 = _core.version;
@@ -267,11 +267,20 @@
 	  };
 	};
 
+	var _library = true;
+
+	var _shared = createCommonjsModule(function (module) {
 	var SHARED = '__core-js_shared__';
 	var store = _global[SHARED] || (_global[SHARED] = {});
-	var _shared = function (key) {
-	  return store[key] || (store[key] = {});
-	};
+
+	(module.exports = function (key, value) {
+	  return store[key] || (store[key] = value !== undefined ? value : {});
+	})('versions', []).push({
+	  version: _core.version,
+	  mode: _library ? 'pure' : 'global',
+	  copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
+	});
+	});
 
 	var id = 0;
 	var px = Math.random();
@@ -858,7 +867,7 @@
 	    data.map(function (v, i) {
 	      if (!v.group) return null;
 	      var y = i * rowHeight + offsetY;
-	      return h('rect', { x: thickWidth, y: y, width: W, height: rowHeight, style: styles.group });
+	      return h('rect', { x: thickWidth, y: y, width: W, height: rowHeight, style: styles.groupBg });
 	    }),
 	    data.map(function (v, i) {
 	      var y = (i + 1) * rowHeight + offsetY;
@@ -923,6 +932,9 @@
 	      if (x + w2 < cur && v.percent < 0.999999) {
 	        type = 'red';
 	      }
+	      if (v.group) {
+	        type = 'group';
+	      }
 	      var handler = function handler() {
 	        return onClick(v);
 	      };
@@ -969,7 +981,7 @@
 	        h('rect', { x: x, y: RY, width: barHeight, height: barHeight, style: styles[v.type] }),
 	        h(
 	          'text',
-	          { x: x + barHeight + 10, y: y, style: styles.label },
+	          { x: x + barHeight + 5, y: y, style: styles.label },
 	          v.name
 	        )
 	      );
@@ -992,8 +1004,8 @@
 	function getStyles(_ref2) {
 	  var _ref2$BG = _ref2.BG,
 	      BG = _ref2$BG === undefined ? '#fff' : _ref2$BG,
-	      _ref2$groupBG = _ref2.groupBG,
-	      groupBG = _ref2$groupBG === undefined ? '#f5f5f5' : _ref2$groupBG,
+	      _ref2$groupBg = _ref2.groupBg,
+	      groupBg = _ref2$groupBg === undefined ? '#f5f5f5' : _ref2$groupBg,
 	      _ref2$lineColor = _ref2.lineColor,
 	      lineColor = _ref2$lineColor === undefined ? '#eee' : _ref2$lineColor,
 	      _ref2$redLineColor = _ref2.redLineColor,
@@ -1001,9 +1013,11 @@
 	      _ref2$baseBar = _ref2.baseBar,
 	      baseBar = _ref2$baseBar === undefined ? '#b8c2cc' : _ref2$baseBar,
 	      _ref2$greenBar = _ref2.greenBar,
-	      greenBar = _ref2$greenBar === undefined ? '#00a854' : _ref2$greenBar,
+	      greenBar = _ref2$greenBar === undefined ? '#52c41a' : _ref2$greenBar,
+	      _ref2$groupBar = _ref2.groupBar,
+	      groupBar = _ref2$groupBar === undefined ? '#52c41a' : _ref2$groupBar,
 	      _ref2$redBar = _ref2.redBar,
-	      redBar = _ref2$redBar === undefined ? '#f04134' : _ref2$redBar,
+	      redBar = _ref2$redBar === undefined ? '#ed7f2c' : _ref2$redBar,
 	      _ref2$textColor = _ref2.textColor,
 	      textColor = _ref2$textColor === undefined ? '#222' : _ref2$textColor,
 	      _ref2$lightTextColor = _ref2.lightTextColor,
@@ -1051,8 +1065,8 @@
 	    line: line,
 	    cline: redLine,
 	    bline: thickLine,
-	    group: {
-	      fill: groupBG
+	    groupBg: {
+	      fill: groupBg
 	    },
 	    label: text,
 	    groupLabel: _extends$1({}, text, {
@@ -1073,16 +1087,19 @@
 	    },
 	    red: {
 	      fill: redBar
+	    },
+	    group: {
+	      fill: groupBar
 	    }
 	  };
 	}
 
 	var LEGENDS = [{
 	  type: 'bar',
-	  name: 'Planning'
+	  name: 'Remaining'
 	}, {
 	  type: 'green',
-	  name: 'Actual'
+	  name: 'Completed'
 	}, {
 	  type: 'red',
 	  name: 'Delay'
@@ -1229,8 +1246,6 @@
 	      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
 	  };
 	};
-
-	var _library = true;
 
 	var _redefine = _hide;
 
