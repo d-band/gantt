@@ -10,10 +10,9 @@ export default function Labels({
           key={i}
           x={10}
           y={(i + 0.5) * rowHeight + offsetY}
-          style={
-            v.group ? styles.groupLabel : styles.label
-          }
-        >{v.name}
+          style={v.group ? styles.groupLabel : styles.label}
+        >
+          {v.name}
         </text>
       ))}
     </g>

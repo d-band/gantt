@@ -930,6 +930,9 @@
 	      var TY = y + barHeight / 2;
 	      var type = 'green';
 	      if (x + w2 < cur && v.percent < 0.999999) {
+	        type = 'yellow';
+	      }
+	      if (x + w1 < cur && v.percent < 0.999999) {
 	        type = 'red';
 	      }
 	      if (v.group) {
@@ -1016,6 +1019,8 @@
 	      greenBar = _ref2$greenBar === undefined ? '#52c41a' : _ref2$greenBar,
 	      _ref2$groupBar = _ref2.groupBar,
 	      groupBar = _ref2$groupBar === undefined ? '#52c41a' : _ref2$groupBar,
+	      _ref2$yellowBar = _ref2.yellowBar,
+	      yellowBar = _ref2$yellowBar === undefined ? '#52c41a' : _ref2$yellowBar,
 	      _ref2$redBar = _ref2.redBar,
 	      redBar = _ref2$redBar === undefined ? '#ed7f2c' : _ref2$redBar,
 	      _ref2$textColor = _ref2.textColor,
@@ -1084,6 +1089,9 @@
 	    },
 	    green: {
 	      fill: greenBar
+	    },
+	    yellow: {
+	      fill: yellowBar
 	    },
 	    red: {
 	      fill: redBar

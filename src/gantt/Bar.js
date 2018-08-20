@@ -18,6 +18,9 @@ export default function Bar({
         const TY = y + barHeight / 2;
         let type = 'green';
         if ((x + w2) < cur && v.percent < 0.999999) {
+          type = 'yellow';
+        }
+        if ((x + w1) < cur && v.percent < 0.999999) {
           type = 'red';
         }
         if (v.group) {

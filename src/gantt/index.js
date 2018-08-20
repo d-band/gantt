@@ -60,35 +60,41 @@ export default function Gantt({
         thickWidth={thickWidth}
         maxTextWidth={maxTextWidth}
       />
-      {viewMode === 'day' ? <DayHeader
-        styles={styles}
-        unit={unit}
-        height={height}
-        offsetY={offsetY}
-        minTime={minTime}
-        maxTime={maxTime}
-        maxTextWidth={maxTextWidth}
-        footerHeight={footerHeight}
-      /> : null}
-      {viewMode === 'week' ? <WeekHeader
-        styles={styles}
-        unit={unit}
-        height={height}
-        offsetY={offsetY}
-        minTime={minTime}
-        maxTime={maxTime}
-        maxTextWidth={maxTextWidth}
-        footerHeight={footerHeight}
-      /> : null}
-      {viewMode === 'month' ? <MonthHeader
-        styles={styles}
-        unit={unit}
-        offsetY={offsetY}
-        minTime={minTime}
-        maxTime={maxTime}
-        maxTextWidth={maxTextWidth}
-        footerHeight={footerHeight}
-      /> : null}
+      {viewMode === 'day' ? (
+        <DayHeader
+          styles={styles}
+          unit={unit}
+          height={height}
+          offsetY={offsetY}
+          minTime={minTime}
+          maxTime={maxTime}
+          maxTextWidth={maxTextWidth}
+          footerHeight={footerHeight}
+        />
+      ) : null}
+      {viewMode === 'week' ? (
+        <WeekHeader
+          styles={styles}
+          unit={unit}
+          height={height}
+          offsetY={offsetY}
+          minTime={minTime}
+          maxTime={maxTime}
+          maxTextWidth={maxTextWidth}
+          footerHeight={footerHeight}
+        />
+      ) : null}
+      {viewMode === 'month' ? (
+        <MonthHeader
+          styles={styles}
+          unit={unit}
+          offsetY={offsetY}
+          minTime={minTime}
+          maxTime={maxTime}
+          maxTextWidth={maxTextWidth}
+          footerHeight={footerHeight}
+        />
+      ) : null}
       <Grid
         styles={styles}
         data={data}

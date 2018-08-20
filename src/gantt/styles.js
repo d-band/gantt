@@ -16,6 +16,7 @@ export default function getStyles({
   baseBar = '#b8c2cc',
   greenBar = '#52c41a',
   groupBar = '#52c41a',
+  yellowBar = '#52c41a',
   redBar = '#ed7f2c',
   textColor = '#222',
   lightTextColor = '#999',
@@ -85,6 +86,9 @@ export default function getStyles({
     },
     green: {
       fill: greenBar
+    },
+    yellow: {
+      fill: yellowBar
     },
     red: {
       fill: redBar
