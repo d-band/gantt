@@ -1,3 +1,5 @@
+import { s2p } from '../utils';
+
 export default function render(vnode, ctx, e) {
   const { tag, props, children } = vnode;
   if (tag === 'svg') {
@@ -17,6 +19,27 @@ export default function render(vnode, ctx, e) {
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
+  }
+  if (tag === 'polyline' || tag === 'polygon') {
+    const { points, style = {} } = props;
+    const p = s2p(points);
+    if (style.stroke) {
+      ctx.strokeStyle = style.stroke;
+      ctx.lineWidth = parseFloat(style['stroke-width'] || 1);
+    }
+    if (style.fill) {
+      ctx.fillStyle = style.fill;
+    }
+    ctx.beginPath();
+    ctx.moveTo(p[0][0], p[0][1]);
+    for (let i = 1; i < p.length; i++) {
+      ctx.lineTo(p[i][0], p[i][1]);
+    }
+    if (tag === 'polyline') {
+      ctx.stroke();
+    } else {
+      ctx.fill();
+    }
   }
   if (tag === 'rect') {
     const {

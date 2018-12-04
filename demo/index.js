@@ -1,158 +1,151 @@
 import {
   SVGGantt,
   CanvasGantt,
-  StrGantt
+  StrGantt,
+  utils
 } from '../src';
+import { getData, formatXML } from './utils';
 
-const data = getData();
-const options = {
+const $ = s => document.querySelector(s);
+const { tasks, links } = getData();
+
+const data = utils.formatData(tasks, links);
+const opts = {
   viewMode: 'week',
   onClick: v => console.log(v)
 };
-const svgGantt = new SVGGantt('#svg', data, options);
-const canvasGantt = new CanvasGantt('#canvas', data, options);
-const strGantt = new StrGantt(data, options);
+const svgGantt = new SVGGantt('#svg', data, opts);
+const canvasGantt = new CanvasGantt('#canvas', data, opts);
+const strGantt = new StrGantt(data, opts);
 
 function renderStr() {
-  const dom = document.querySelector('#str');
-  dom.textContent = formatXML(strGantt.render());
+  $('#str').textContent = formatXML(strGantt.render());
 }
 
 renderStr();
 
-document.querySelector('#viewMode').onchange = e => viewModeChanged(e.target.value);
-
-function viewModeChanged(viewMode) {
-  svgGantt.setOptions({
-    viewMode
-  });
-  canvasGantt.setOptions({
-    viewMode
-  });
-  strGantt.setOptions({
-    viewMode
-  });
+function changeOptions(options) {
+  svgGantt.setOptions(options);
+  canvasGantt.setOptions(options);
+  strGantt.setOptions(options);
   renderStr();
 }
 
-function rand(begin) {
-  let date;
-  let days;
-  if (begin) {
-    days = Math.random() * 60 + 5;
-    date = new Date(begin);
-  } else {
-    days = Math.random() * 60 - 60;
-    date = new Date();
+function changeData() {
+  const list = utils.formatData(tasks, links);
+  svgGantt.setData(list);
+  canvasGantt.setData(list);
+  strGantt.setData(list);
+  renderStr();
+}
+$('#viewMode').onchange = e => {
+  const viewMode = e.target.value;
+  changeOptions({ viewMode });
+};
+$('#showLinks').onchange = () => {
+  const showLinks = $('#showLinks').checked;
+  changeOptions({ showLinks });
+};
+$('#showDelay').onchange = () => {
+  const showDelay = $('#showDelay').checked;
+  changeOptions({ showDelay });
+};
+$('#autoSchedule').onclick = () => {
+  utils.autoSchedule(tasks, links);
+  changeData();
+};
+
+function addLink(s, e) {
+  const sid = parseInt(s.dataset['id']);
+  const eid = parseInt(e.dataset['id']);
+  const snode = tasks.find(t => t.id === sid);
+  const enode = tasks.find(t => t.id === eid);
+  let stype = isStart(s) ? 'S' : 'F';
+  let etype = isStart(e) ? 'S' : 'F';
+  if (snode.type === 'milestone') {
+    stype = 'F';
   }
-  date.setDate(date.getDate() + days);
-  return date;
+  if (enode.type === 'milestone') {
+    etype = 'S';
+  }
+  links.push({ source: sid, target: eid, type: `${stype}${etype}` });
+  changeData();
 }
 
-function getData() {
-  const data = [{
-    id: 1,
-    name: 'Waterfall model',
-    collapse: false,
-    children: [{
-      id: 11,
-      name: 'Requirements'
-    }, {
-      id: 12,
-      name: 'Design'
-    }, {
-      id: 13,
-      name: 'Implement'
-    }, {
-      id: 14,
-      name: 'Verification'
-    }]
-  }, {
-    id: 2,
-    name: 'Development',
-    collapse: false,
-    children: [{
-      id: 21,
-      name: 'Preliminary'
-    }, {
-      id: 22,
-      name: 'Systems design'
-    }, {
-      id: 23,
-      name: 'Development'
-    }, {
-      id: 24,
-      name: 'Integration'
-    }]
-  }];
-  data.forEach((v) => {
-    v.children.forEach((item) => {
-      /* eslint-disable */
-      item.from = rand();
-      item.to = rand(item.from);
-      item.percent = Math.random();
-      /* eslint-enable */
-    });
+const NS = 'http://www.w3.org/2000/svg';
+
+let $svg = null;
+let moving = false;
+let $start = null;
+let $line = null;
+
+function isStart(el) {
+  return el.classList.contains('gantt-ctrl-start');
+}
+
+function isFinish(el) {
+  return el.classList.contains('gantt-ctrl-finish');
+}
+
+document.onmousedown = (e) => {
+  $svg = $('svg');
+  if (!isStart(e.target) && !isFinish(e.target)) {
+    return;
+  }
+  e.preventDefault();
+  $start = e.target;
+  document.querySelectorAll('.gantt-ctrl-start,.gantt-ctrl-finish').forEach(elem => {
+    elem.style['display'] = 'block';
   });
-  return data;
-}
+  moving = true;
+  $line = document.createElementNS(NS, 'line');
+  const x = $start.getAttribute('cx');
+  const y = $start.getAttribute('cy');
+  $line.setAttribute('x1', x);
+  $line.setAttribute('y1', y);
+  $line.setAttribute('x2', x);
+  $line.setAttribute('y2', y);
+  $line.style['stroke'] = '#ffa011';
+  $line.style['stroke-width'] = '2';
+  $line.style['stroke-dasharray'] = '5';
+  $svg.appendChild($line);
+};
 
-function formatXML (xml) {
-  var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
-  var wsexp = / *(.*) +\n/g;
-  var contexp = /(<.+>)(.+\n)/g;
-  xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
-  var pad = 0;
-  var formatted = '';
-  var lines = xml.split('\n');
-  var indent = 0;
-  var lastType = 'other';
-  // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
-  var transitions = {
-    'single->single': 0,
-    'single->closing': -1,
-    'single->opening': 0,
-    'single->other': 0,
-    'closing->single': 0,
-    'closing->closing': -1,
-    'closing->opening': 0,
-    'closing->other': 0,
-    'opening->single': 1,
-    'opening->closing': 0,
-    'opening->opening': 1,
-    'opening->other': 1,
-    'other->single': 0,
-    'other->closing': -1,
-    'other->opening': 0,
-    'other->other': 0
-  };
+document.onmousemove = (e) => {
+  if (!moving) return;
+  e.preventDefault();
+  if (isStart(e.target) || isFinish(e.target)) {
+    const x = e.target.getAttribute('cx');
+    const y = e.target.getAttribute('cy');
+    $line.setAttribute('x2', x);
+    $line.setAttribute('y2', y);
+  } else {
+    const x = e.clientX;
+    const y = e.clientY;
+    const rect = $svg.getBoundingClientRect();
+    $line.setAttribute('x2', x - rect.left);
+    $line.setAttribute('y2', y - rect.top);
+  }
+};
 
-  for (var i = 0; i < lines.length; i++) {
-    var ln = lines[i];
-
-    // Luca Viggiani 2017-07-03: handle optional <?xml ... ?> declaration
-    if (ln.match(/\s*<\?xml/)) {
-      formatted += ln + '\n';
-      continue;
-    }
-
-    var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
-    var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
-    var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
-    var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
-    var fromTo = lastType + '->' + type;
-    lastType = type;
-    var padding = '';
-
-    indent += transitions[fromTo];
-    for (var j = 0; j < indent; j++) {
-      padding += '  ';
-    }
-    if (fromTo == 'opening->closing')
-      formatted = formatted.substr(0, formatted.length - 1) + ln + '\n'; // substr removes line break (\n) from prev loop
-    else
-      formatted += padding + ln + '\n';
+document.onmouseup = (e) => {
+  if (!moving) return;
+  e.preventDefault();
+  const isCtrl = isStart(e.target) || isFinish(e.target);
+  if ($start && isCtrl) {
+    addLink($start, e.target);
   }
 
-  return formatted;
-}
+  document.querySelectorAll('.gantt-ctrl-start,.gantt-ctrl-finish').forEach(elem => {
+    elem.style['display'] = 'none';
+  });
+  moving = false;
+  if ($start) {
+    $start.style['display'] = 'none';
+    $start = null;
+  }
+  if ($line) {
+    $svg.removeChild($line);
+    $line = null;
+  }
+};

@@ -3,18 +3,31 @@ import Gantt from './gantt';
 import render from './render/canvas';
 import createContext from './context';
 import { getFont } from './gantt/styles';
-import { formatData, textWidth } from './utils';
+import {
+  minDate, maxDate, textWidth, max
+} from './utils';
 
 export default class CanvasGantt {
   constructor(element, data, options = {}) {
     this.ctx = createContext(element);
-    this.data = formatData(data);
+    this.format(data);
     this.options = options;
     this.render();
     this.ctx.onClick = e => this.render(e);
   }
+  format(data) {
+    this.data = data;
+    let start = null;
+    let end = null;
+    data.forEach((v) => {
+      start = minDate(start, v.start);
+      end = maxDate(end, v.end);
+    });
+    this.start = start || new Date();
+    this.end = end || new Date();
+  }
   setData(data) {
-    this.data = formatData(data);
+    this.format(data);
     this.render();
   }
   setOptions(options) {
@@ -22,11 +35,15 @@ export default class CanvasGantt {
     this.render();
   }
   render(e) {
-    const { data, options } = this;
-    if (!options.maxTextWidth) {
+    const {
+      data, start, end, options
+    } = this;
+    if (options.maxTextWidth === undefined) {
       const font = getFont(options.styleOptions || {});
-      options.maxTextWidth = Math.max.apply(null, data.map(v => textWidth(v.name, font, 20)));
+      const w = v => textWidth(v.text, font, 20);
+      options.maxTextWidth = max(data.map(w), 0);
     }
-    render(<Gantt data={data} {...options} />, this.ctx, e);
+    const props = { ...options, start, end };
+    render(<Gantt data={data} {...props} />, this.ctx, e);
   }
 }

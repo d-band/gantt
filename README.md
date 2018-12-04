@@ -22,14 +22,30 @@ import { SVGGantt, CanvasGantt, StrGantt } from 'gantt';
 
 const data = [{
   id: 1,
-  name: 'group 1',
-  children: [{
-    id: 11,
-    name: 'task 11',
-    from: new Date('2015-09-01 00:00:00'),
-    to: new Date('2015-09-12 00:00:00'),
-    percent: 0.5
+  type: 'group',
+  text: '1 Waterfall model',
+  start: new Date('2018-10-10T09:24:24.319Z'),
+  end: new Date('2018-12-12T09:32:51.245Z'),
+  percent: 0.71,
+  links: []
+}, {
+  id: 11,
+  parent: 1,
+  text: '1.1 Requirements',
+  start: new Date('2018-10-21T09:24:24.319Z'),
+  end: new Date('2018-11-22T01:01:08.938Z'),
+  percent: 0.29,
+  links: [{
+    id: 12,
+    type: 'FS'
   }]
+}, {
+  id: 12,
+  parent: 1,
+  text: '1.2 Design',
+  start: new Date('2018-11-05T09:24:24.319Z'),
+  end: new Date('2018-12-12T09:32:51.245Z'),
+  percent: 0.78,
 }];
 
 new SVGGantt('#svg-root', data, {
@@ -59,16 +75,18 @@ this.body = strGantt.render();
   rowHeight: 40,
   barHeight: 16,
   thickWidth: 1.4,
-  footerHeight: 50,
   styleOptions: {
-    BG: '#fff',
-    groupBg: '#f5f5f5',
+    bgColor: '#fff',
     lineColor: '#eee',
     redLineColor: '#f04134',
-    baseBar: '#b8c2cc',
-    greenBar: '#52c41a',
-    groupBar: '#52c41a',
-    redBar: '#ed7f2c',
+    groupBack: '#3db9d3',
+    groupFront: '#299cb4',
+    taskBack: '#65c16f',
+    taskFront: '#46ad51',
+    milestone: '#d33daf',
+    warning: '#faad14',
+    danger: '#f5222d',
+    link: '#ffa011',
     textColor: '#222',
     lightTextColor: '#999',
     lineWidth: '1px',

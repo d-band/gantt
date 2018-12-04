@@ -3,13 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Gantt Chart Demo</title>
+  <style>
+    html {
+      font-family: Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
+    }
+    .gantt-bar:hover circle {
+      display: block!important;
+    }
+    .gantt-ctrl-start:hover, .gantt-ctrl-finish:hover {
+      fill: #ffbf5e!important;
+      stroke: #ffa011!important;
+    }
+  </style>
 </head>
 <body>
-  <select id="viewMode" style="margin: 20px 0;height: 30px;width: 180px;">
-    <option value="day">Day</option>
-    <option value="week" selected>Week</option>
-    <option value="month">Month</option>
-  </select>
+  <div id="ctrls">
+    <select id="viewMode" style="margin: 20px 0;height: 30px;width: 180px;">
+      <option value="day">Day</option>
+      <option value="week" selected>Week</option>
+      <option value="month">Month</option>
+    </select>
+    <input type="checkbox" id="showLinks" checked>
+    <label for="showLinks">Show Links</label>
+    <input type="checkbox" id="showDelay" checked>
+    <label for="showDelay">Show Delay</label>
+    <button type="button" id="autoSchedule">Auto Schedule</button>
+  </div>
   <div id="svg"></div>
   <canvas id="canvas"></canvas>
   <pre id="str" style="width: 800px;overflow-x: scroll;background-color: #eee;"></pre>

@@ -6,20 +6,10 @@ import WeekHeader from './WeekHeader';
 import MonthHeader from './MonthHeader';
 import Grid from './Grid';
 import Labels from './Labels';
+import LinkLine from './LinkLine';
 import Bar from './Bar';
-import Legend from './Legend';
 import getStyles from './styles';
 
-const LEGENDS = [{
-  type: 'bar',
-  name: 'Remaining'
-}, {
-  type: 'green',
-  name: 'Completed'
-}, {
-  type: 'red',
-  name: 'Delay'
-}];
 const UNIT = {
   day: DAY / 28,
   week: 7 * DAY / 56,
@@ -36,18 +26,20 @@ export default function Gantt({
   rowHeight = 40,
   barHeight = 16,
   thickWidth = 1.4,
-  footerHeight = 50,
-  legends = LEGENDS,
-  styleOptions = {}
+  styleOptions = {},
+  showLinks = true,
+  showDelay = true,
+  start,
+  end
 }) {
   const unit = UNIT[viewMode];
-  const minTime = Math.min.apply(null, data.map(v => v.from)) - unit * 40;
-  const maxTime = Math.max.apply(null, data.map(v => v.to)) + unit * 40;
+  const minTime = start.getTime() - unit * 48;
+  const maxTime = end.getTime() + unit * 48;
 
   const width = (maxTime - minTime) / unit + maxTextWidth;
-  const height = data.length * rowHeight + offsetY + footerHeight;
+  const height = data.length * rowHeight + offsetY;
   const box = `0 0 ${width} ${height}`;
-  const current = (new Date()).getTime();
+  const current = Date.now();
   const styles = getStyles(styleOptions);
 
   return (
@@ -69,7 +61,6 @@ export default function Gantt({
           minTime={minTime}
           maxTime={maxTime}
           maxTextWidth={maxTextWidth}
-          footerHeight={footerHeight}
         />
       ) : null}
       {viewMode === 'week' ? (
@@ -81,7 +72,6 @@ export default function Gantt({
           minTime={minTime}
           maxTime={maxTime}
           maxTextWidth={maxTextWidth}
-          footerHeight={footerHeight}
         />
       ) : null}
       {viewMode === 'month' ? (
@@ -92,7 +82,6 @@ export default function Gantt({
           minTime={minTime}
           maxTime={maxTime}
           maxTextWidth={maxTextWidth}
-          footerHeight={footerHeight}
         />
       ) : null}
       <Grid
@@ -102,16 +91,31 @@ export default function Gantt({
         height={height}
         offsetY={offsetY}
         rowHeight={rowHeight}
-        thickWidth={thickWidth}
-        footerHeight={footerHeight}
         maxTextWidth={maxTextWidth}
       />
-      <Labels
-        styles={styles}
-        data={data}
-        offsetY={offsetY}
-        rowHeight={rowHeight}
-      />
+      {maxTextWidth > 0 ? (
+        <Labels
+          styles={styles}
+          data={data}
+          offsetY={offsetY}
+          rowHeight={rowHeight}
+        />
+      ) : null}
+      {showLinks ? (
+        <LinkLine
+          styles={styles}
+          data={data}
+          unit={unit}
+          height={height}
+          current={current}
+          offsetY={offsetY}
+          minTime={minTime}
+          onClick={onClick}
+          rowHeight={rowHeight}
+          barHeight={barHeight}
+          maxTextWidth={maxTextWidth}
+        />
+      ) : null}
       <Bar
         styles={styles}
         data={data}
@@ -121,18 +125,10 @@ export default function Gantt({
         offsetY={offsetY}
         minTime={minTime}
         onClick={onClick}
+        showDelay={showDelay}
         rowHeight={rowHeight}
         barHeight={barHeight}
         maxTextWidth={maxTextWidth}
-        footerHeight={footerHeight}
-      />
-      <Legend
-        styles={styles}
-        legends={legends}
-        width={width}
-        height={height}
-        barHeight={barHeight}
-        footerHeight={footerHeight}
       />
     </svg>
   );

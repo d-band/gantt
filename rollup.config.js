@@ -21,17 +21,16 @@ export default {
     babel({
       babelrc: false,
       presets: [
-        ['env', {
+        ['@babel/preset-env', {
           modules: false
-        }],
-        'stage-2'
+        }]
       ],
       plugins: [
-        ['transform-react-jsx', {
+        ['@babel/plugin-transform-react-jsx', {
           'pragma': 'h'
         }],
-        'external-helpers',
-        'transform-runtime'
+        '@babel/plugin-external-helpers',
+        '@babel/plugin-transform-runtime'
       ],
       runtimeHelpers: true,
       externalHelpers: true,

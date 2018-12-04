@@ -2,17 +2,30 @@ import h from './h';
 import Gantt from './gantt';
 import render from './render/svg';
 import { getFont } from './gantt/styles';
-import { formatData, textWidth } from './utils';
+import {
+  minDate, maxDate, textWidth, max
+} from './utils';
 
 export default class SVGGantt {
   constructor(element, data, options = {}) {
     this.dom = typeof element === 'string' ? document.querySelector(element) : element;
-    this.data = formatData(data);
+    this.format(data);
     this.options = options;
     this.render();
   }
+  format(data) {
+    this.data = data;
+    let start = null;
+    let end = null;
+    data.forEach((v) => {
+      start = minDate(start, v.start);
+      end = maxDate(end, v.end);
+    });
+    this.start = start || new Date();
+    this.end = end || new Date();
+  }
   setData(data) {
-    this.data = formatData(data);
+    this.format(data);
     this.render();
   }
   setOptions(options) {
@@ -20,15 +33,19 @@ export default class SVGGantt {
     this.render();
   }
   render() {
-    const { data, options } = this;
+    const {
+      data, start, end, options
+    } = this;
     if (this.tree) {
       this.dom.removeChild(this.tree);
     }
-    if (!options.maxTextWidth) {
+    if (options.maxTextWidth === undefined) {
       const font = getFont(options.styleOptions || {});
-      options.maxTextWidth = Math.max.apply(null, data.map(v => textWidth(v.name, font, 20)));
+      const w = v => textWidth(v.text, font, 20);
+      options.maxTextWidth = max(data.map(w), 0);
     }
-    this.tree = render(<Gantt data={data} {...options} />);
+    const props = { ...options, start, end };
+    this.tree = render(<Gantt data={data} {...props} />);
     this.dom.appendChild(this.tree);
   }
 }

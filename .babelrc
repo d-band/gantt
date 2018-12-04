@@ -1,19 +1,26 @@
 {
-  "presets": ["stage-2"],
   "plugins": [
-    ["transform-react-jsx", {
-      "pragma": "h"
-    }]
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "h"
+      }
+    ]
   ],
   "env": {
     "cjs": {
-      "presets": ["env"]
+      "presets": [
+        "@babel/preset-env"
+      ]
     },
     "es": {
       "presets": [
-        ["env", {
-          "modules": false
-        }]
+        [
+          "@babel/preset-env",
+          {
+            "modules": false
+          }
+        ]
       ]
     }
   }

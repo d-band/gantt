@@ -9,15 +9,17 @@ export function getFont({
 }
 
 export default function getStyles({
-  BG = '#fff',
-  groupBg = '#f5f5f5',
+  bgColor = '#fff',
   lineColor = '#eee',
   redLineColor = '#f04134',
-  baseBar = '#b8c2cc',
-  greenBar = '#52c41a',
-  groupBar = '#52c41a',
-  yellowBar = '#52c41a',
-  redBar = '#ed7f2c',
+  groupBack = '#3db9d3',
+  groupFront = '#299cb4',
+  taskBack = '#65c16f',
+  taskFront = '#46ad51',
+  milestone = '#d33daf',
+  warning = '#faad14',
+  danger = '#f5222d',
+  link = '#ffa011',
   textColor = '#222',
   lightTextColor = '#999',
   lineWidth = '1px',
@@ -54,14 +56,11 @@ export default function getStyles({
     },
     box: {
       ...thickLine,
-      fill: BG
+      fill: bgColor
     },
     line,
     cline: redLine,
     bline: thickLine,
-    groupBg: {
-      fill: groupBg
-    },
     label: text,
     groupLabel: {
       ...text,
@@ -81,20 +80,40 @@ export default function getStyles({
       ...smallText,
       'text-anchor': 'middle'
     },
-    bar: {
-      fill: baseBar
+    link: {
+      stroke: link,
+      'stroke-width': '1.5px',
+      fill: 'none'
     },
-    green: {
-      fill: greenBar
+    linkArrow: {
+      fill: link
     },
-    yellow: {
-      fill: yellowBar
+    milestone: {
+      fill: milestone
     },
-    red: {
-      fill: redBar
+    groupBack: {
+      fill: groupBack
     },
-    group: {
-      fill: groupBar
+    groupFront: {
+      fill: groupFront
+    },
+    taskBack: {
+      fill: taskBack
+    },
+    taskFront: {
+      fill: taskFront
+    },
+    warning: {
+      fill: warning
+    },
+    danger: {
+      fill: danger
+    },
+    ctrl: {
+      display: 'none',
+      fill: '#f0f0f0',
+      stroke: '#929292',
+      'stroke-width': '1px'
     }
   };
 }

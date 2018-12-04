@@ -3,13 +3,13 @@ import { getDates } from '../utils';
 import YearMonth from './YearMonth';
 
 export default function DayHeader({
-  styles, unit, minTime, maxTime, height, offsetY, maxTextWidth, footerHeight
+  styles, unit, minTime, maxTime, height, offsetY, maxTextWidth
 }) {
   const dates = getDates(minTime, maxTime);
   const ticks = [];
   const x0 = maxTextWidth;
   const y0 = offsetY / 2;
-  const RH = height - y0 - footerHeight;
+  const RH = height - y0;
   const len = dates.length - 1;
   for (let i = 0; i < len; i++) {
     const cur = new Date(dates[i]);
