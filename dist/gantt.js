@@ -807,11 +807,15 @@
 	      var e = data[j];
 	      if (!e || !e.start || !e.end) return null;
 	      var gap = 12;
-	      var vgap = barHeight / 2 + 4;
 	      var arrow = 6;
 	      var mgap = e.type === 'milestone' ? barHeight / 2 : 0;
 	      var y1 = y0 + i * rowHeight;
 	      var y2 = y0 + j * rowHeight;
+	      var vgap = barHeight / 2 + 4;
+
+	      if (y1 > y2) {
+	        vgap = -vgap;
+	      }
 
 	      if (l.type === 'FS') {
 	        var x1 = x0 + (s.end - minTime) / unit;
