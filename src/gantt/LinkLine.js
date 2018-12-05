@@ -23,11 +23,15 @@ export default function LinkLine({
           if (!e || !e.start || !e.end) return null;
 
           const gap = 12;
-          const vgap = barHeight / 2 + 4;
           const arrow = 6;
           const mgap = e.type === 'milestone' ? barHeight / 2 : 0;
           const y1 = y0 + i * rowHeight;
           const y2 = y0 + j * rowHeight;
+
+          let vgap = barHeight / 2 + 4;
+          if (y1 > y2) {
+            vgap = -vgap;
+          }
 
           if (l.type === 'FS') {
             const x1 = x0 + (s.end - minTime) / unit;
