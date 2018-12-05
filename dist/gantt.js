@@ -363,7 +363,7 @@
 	  return sorted;
 	}
 	function autoSchedule(tasks, links) {
-	  var lockMilesone = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+	  var lockMilestone = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	  var vmap = {};
 	  links.forEach(function (l) {
 	    vmap[l.source] = {
@@ -409,7 +409,7 @@
 	    var task = tasks[tmap[id]];
 	    var days = task.duration || 0;
 
-	    if (lockMilesone && task.type === 'milestone') {
+	    if (lockMilestone && task.type === 'milestone') {
 	      return;
 	    }
 
@@ -810,12 +810,12 @@
 	      var vgap = barHeight / 2 + 4;
 	      var arrow = 6;
 	      var mgap = e.type === 'milestone' ? barHeight / 2 : 0;
+	      var y1 = y0 + i * rowHeight;
+	      var y2 = y0 + j * rowHeight;
 
 	      if (l.type === 'FS') {
 	        var x1 = x0 + (s.end - minTime) / unit;
-	        var y1 = y0 + i * rowHeight;
 	        var x2 = x0 + (e.start - minTime) / unit - mgap;
-	        var y2 = y0 + j * rowHeight;
 	        var p1 = [[x1, y1], [x1 + gap, y1]];
 
 	        if (x2 - x1 >= 2 * gap) {
@@ -840,27 +840,23 @@
 	      if (l.type === 'FF') {
 	        var _x = x0 + (s.end - minTime) / unit;
 
-	        var _y = y0 + i * rowHeight;
-
 	        var _x2 = x0 + (e.end - minTime) / unit + mgap;
 
-	        var _y2 = y0 + j * rowHeight;
-
-	        var _p = [[_x, _y], [_x + gap, _y]];
+	        var _p = [[_x, y1], [_x + gap, y1]];
 
 	        if (_x2 <= _x) {
-	          _p.push([_x + gap, _y2]);
+	          _p.push([_x + gap, y2]);
 	        } else {
-	          _p.push([_x + gap, _y2 - vgap]);
+	          _p.push([_x + gap, y2 - vgap]);
 
-	          _p.push([_x2 + gap, _y2 - vgap]);
+	          _p.push([_x2 + gap, y2 - vgap]);
 
-	          _p.push([_x2 + gap, _y2]);
+	          _p.push([_x2 + gap, y2]);
 	        }
 
-	        _p.push([_x2 + arrow, _y2]);
+	        _p.push([_x2 + arrow, y2]);
 
-	        var _p2 = [[_x2 + arrow, _y2 - arrow], [_x2, _y2], [_x2 + arrow, _y2 + arrow]];
+	        var _p2 = [[_x2 + arrow, y2 - arrow], [_x2, y2], [_x2 + arrow, y2 + arrow]];
 	        return h("g", null, h("polyline", {
 	          points: p2s(_p),
 	          style: styles.link
@@ -873,27 +869,23 @@
 	      if (l.type === 'SS') {
 	        var _x3 = x0 + (s.start - minTime) / unit;
 
-	        var _y3 = y0 + i * rowHeight;
-
 	        var _x4 = x0 + (e.start - minTime) / unit - mgap;
 
-	        var _y4 = y0 + j * rowHeight;
-
-	        var _p3 = [[_x3, _y3], [_x3 - gap, _y3]];
+	        var _p3 = [[_x3, y1], [_x3 - gap, y1]];
 
 	        if (_x3 <= _x4) {
-	          _p3.push([_x3 - gap, _y4]);
+	          _p3.push([_x3 - gap, y2]);
 	        } else {
-	          _p3.push([_x3 - gap, _y4 - vgap]);
+	          _p3.push([_x3 - gap, y2 - vgap]);
 
-	          _p3.push([_x4 - gap, _y4 - vgap]);
+	          _p3.push([_x4 - gap, y2 - vgap]);
 
-	          _p3.push([_x4 - gap, _y4]);
+	          _p3.push([_x4 - gap, y2]);
 	        }
 
-	        _p3.push([_x4 - arrow, _y4]);
+	        _p3.push([_x4 - arrow, y2]);
 
-	        var _p4 = [[_x4 - arrow, _y4 - arrow], [_x4, _y4], [_x4 - arrow, _y4 + arrow]];
+	        var _p4 = [[_x4 - arrow, y2 - arrow], [_x4, y2], [_x4 - arrow, y2 + arrow]];
 	        return h("g", null, h("polyline", {
 	          points: p2s(_p3),
 	          style: styles.link
@@ -906,27 +898,23 @@
 	      if (l.type === 'SF') {
 	        var _x5 = x0 + (s.start - minTime) / unit;
 
-	        var _y5 = y0 + i * rowHeight;
-
 	        var _x6 = x0 + (e.end - minTime) / unit + mgap;
 
-	        var _y6 = y0 + j * rowHeight;
-
-	        var _p5 = [[_x5, _y5], [_x5 - gap, _y5]];
+	        var _p5 = [[_x5, y1], [_x5 - gap, y1]];
 
 	        if (_x5 - _x6 >= 2 * gap) {
-	          _p5.push([_x5 - gap, _y6]);
+	          _p5.push([_x5 - gap, y2]);
 	        } else {
-	          _p5.push([_x5 - gap, _y6 - vgap]);
+	          _p5.push([_x5 - gap, y2 - vgap]);
 
-	          _p5.push([_x6 + gap, _y6 - vgap]);
+	          _p5.push([_x6 + gap, y2 - vgap]);
 
-	          _p5.push([_x6 + gap, _y6]);
+	          _p5.push([_x6 + gap, y2]);
 	        }
 
-	        _p5.push([_x6 + arrow, _y6]);
+	        _p5.push([_x6 + arrow, y2]);
 
-	        var _p6 = [[_x6 + arrow, _y6 - arrow], [_x6, _y6], [_x6 + arrow, _y6 + arrow]];
+	        var _p6 = [[_x6 + arrow, y2 - arrow], [_x6, y2], [_x6 + arrow, y2 + arrow]];
 	        return h("g", null, h("polyline", {
 	          points: p2s(_p5),
 	          style: styles.link
