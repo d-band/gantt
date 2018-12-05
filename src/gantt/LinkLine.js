@@ -26,12 +26,12 @@ export default function LinkLine({
           const vgap = barHeight / 2 + 4;
           const arrow = 6;
           const mgap = e.type === 'milestone' ? barHeight / 2 : 0;
+          const y1 = y0 + i * rowHeight;
+          const y2 = y0 + j * rowHeight;
 
           if (l.type === 'FS') {
             const x1 = x0 + (s.end - minTime) / unit;
-            const y1 = y0 + i * rowHeight;
             const x2 = x0 + (e.start - minTime) / unit - mgap;
-            const y2 = y0 + j * rowHeight;
             const p1 = [
               [x1, y1],
               [x1 + gap, y1]
@@ -58,9 +58,7 @@ export default function LinkLine({
           }
           if (l.type === 'FF') {
             const x1 = x0 + (s.end - minTime) / unit;
-            const y1 = y0 + i * rowHeight;
             const x2 = x0 + (e.end - minTime) / unit + mgap;
-            const y2 = y0 + j * rowHeight;
             const p1 = [
               [x1, y1],
               [x1 + gap, y1]
@@ -87,9 +85,7 @@ export default function LinkLine({
           }
           if (l.type === 'SS') {
             const x1 = x0 + (s.start - minTime) / unit;
-            const y1 = y0 + i * rowHeight;
             const x2 = x0 + (e.start - minTime) / unit - mgap;
-            const y2 = y0 + j * rowHeight;
             const p1 = [
               [x1, y1],
               [x1 - gap, y1]
@@ -116,9 +112,7 @@ export default function LinkLine({
           }
           if (l.type === 'SF') {
             const x1 = x0 + (s.start - minTime) / unit;
-            const y1 = y0 + i * rowHeight;
             const x2 = x0 + (e.end - minTime) / unit + mgap;
-            const y2 = y0 + j * rowHeight;
             const p1 = [
               [x1, y1],
               [x1 - gap, y1]

@@ -196,7 +196,7 @@ export function toposort(links) {
   return sorted;
 }
 
-export function autoSchedule(tasks, links, lockMilesone = false) {
+export function autoSchedule(tasks, links, lockMilestone = false) {
   const vmap = {};
   links.forEach((l) => {
     vmap[l.source] = { id: l.source, links: [] };
@@ -229,7 +229,7 @@ export function autoSchedule(tasks, links, lockMilesone = false) {
   sorted.forEach((id) => {
     const task = tasks[tmap[id]];
     const days = task.duration || 0;
-    if (lockMilesone && task.type === 'milestone') {
+    if (lockMilestone && task.type === 'milestone') {
       return;
     }
     let start = null;
