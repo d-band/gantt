@@ -217,6 +217,10 @@
 	      node.start = tmp.start;
 	      node.end = tmp.end;
 	      node.percent = tmp.percent;
+
+	      if (tmp.start && tmp.end) {
+	        node.duration = (tmp.end - tmp.start) / DAY;
+	      }
 	    } else {
 	      node.percent = node.percent || 0;
 
