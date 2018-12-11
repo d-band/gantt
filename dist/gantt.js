@@ -249,7 +249,7 @@
 	  };
 	}
 
-	function formatData(tasks, links) {
+	function formatData(tasks, links, walk) {
 	  var map = {};
 	  var tmp = tasks.map(function (t, i) {
 	    map[t.id] = i;
@@ -281,6 +281,11 @@
 	  });
 	  walkLevel(roots, '');
 	  walkDates(roots);
+
+	  if (walk) {
+	    walk(roots);
+	  }
+
 	  var list = [];
 	  roots.forEach(function (r) {
 	    var stack = [];

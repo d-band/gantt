@@ -108,7 +108,7 @@ function walkDates(nodes) {
   return { start, end, percent };
 }
 
-export function formatData(tasks, links) {
+export function formatData(tasks, links, walk) {
   const map = {};
   const tmp = tasks.map((t, i) => {
     map[t.id] = i;
@@ -133,6 +133,10 @@ export function formatData(tasks, links) {
 
   walkLevel(roots, '');
   walkDates(roots);
+
+  if (walk) {
+    walk(roots);
+  }
 
   const list = [];
   roots.forEach((r) => {
