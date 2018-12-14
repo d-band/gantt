@@ -253,10 +253,10 @@ export function autoSchedule(tasks, links, lockMilestone = false) {
           start = maxDate(start, e);
         }
         if (l.type === 'SF') {
-          end = minDate(end, v.start);
+          end = maxDate(end, v.start);
         }
         if (l.type === 'FF') {
-          end = minDate(end, e);
+          end = maxDate(end, e);
         }
       }
     }
