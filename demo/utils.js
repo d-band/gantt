@@ -61,11 +61,13 @@ export function getData() {
   const links = [{
     source: 11,
     target: 12,
-    type: 'FS'
+    type: 'FS',
+    lag: -10
   }, {
     source: 12,
     target: 13,
-    type: 'FS'
+    type: 'FS',
+    lag: 5
   }, {
     source: 13,
     target: 14,

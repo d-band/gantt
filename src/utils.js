@@ -245,15 +245,16 @@ export function autoSchedule(tasks, links, lockMilestone = false) {
       const l = ins[id][i];
       const v = tasks[tmap[l.source]];
       if (v.start) {
-        const e = addDays(v.start, v.duration || 0);
+        const s = addDays(v.start, l.lag || 0);
+        const e = addDays(s, v.duration || 0);
         if (l.type === 'SS') {
-          start = maxDate(start, v.start);
+          start = maxDate(start, s);
         }
         if (l.type === 'FS') {
           start = maxDate(start, e);
         }
         if (l.type === 'SF') {
-          end = maxDate(end, v.start);
+          end = maxDate(end, s);
         }
         if (l.type === 'FF') {
           end = maxDate(end, e);

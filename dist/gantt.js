@@ -430,10 +430,11 @@
 	      var v = tasks[tmap[l.source]];
 
 	      if (v.start) {
-	        var e = addDays(v.start, v.duration || 0);
+	        var s = addDays(v.start, l.lag || 0);
+	        var e = addDays(s, v.duration || 0);
 
 	        if (l.type === 'SS') {
-	          start = maxDate(start, v.start);
+	          start = maxDate(start, s);
 	        }
 
 	        if (l.type === 'FS') {
@@ -441,7 +442,7 @@
 	        }
 
 	        if (l.type === 'SF') {
-	          end = maxDate(end, v.start);
+	          end = maxDate(end, s);
 	        }
 
 	        if (l.type === 'FF') {
