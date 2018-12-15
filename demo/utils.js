@@ -62,7 +62,7 @@ export function getData() {
     source: 11,
     target: 12,
     type: 'FS',
-    lag: -10
+    lag: 3
   }, {
     source: 12,
     target: 13,
