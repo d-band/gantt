@@ -273,10 +273,7 @@
 	    var t = tmp[map[l.target]];
 
 	    if (s && t) {
-	      s.links.push({
-	        id: t.id,
-	        type: l.type
-	      });
+	      s.links.push(l);
 	    }
 	  });
 	  walkLevel(roots, '');
@@ -813,7 +810,7 @@
 	    }
 
 	    return s.links.map(function (l) {
-	      var j = map[l.id];
+	      var j = map[l.target];
 	      var e = data[j];
 	      if (!e || !e.start || !e.end) return null;
 	      var gap = 12;

@@ -36,7 +36,7 @@ const data = [{
   end: new Date('2018-11-22T01:01:08.938Z'),
   percent: 0.29,
   links: [{
-    id: 12,
+    target: 12,
     type: 'FS'
   }]
 }, {

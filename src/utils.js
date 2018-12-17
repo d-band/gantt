@@ -127,7 +127,7 @@ export function formatData(tasks, links, walk) {
     const s = tmp[map[l.source]];
     const t = tmp[map[l.target]];
     if (s && t) {
-      s.links.push({ id: t.id, type: l.type });
+      s.links.push(l);
     }
   });
 

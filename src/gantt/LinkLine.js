@@ -17,7 +17,7 @@ export default function LinkLine({
           return null;
         }
         return s.links.map((l) => {
-          const j = map[l.id];
+          const j = map[l.target];
           const e = data[j];
 
           if (!e || !e.start || !e.end) return null;
