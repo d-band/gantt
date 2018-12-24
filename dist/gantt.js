@@ -958,13 +958,13 @@
 	  var x0 = maxTextWidth;
 	  var y0 = (rowHeight - barHeight) / 2 + offsetY;
 	  var cur = x0 + (current - minTime) / unit;
-	  return h("g", null, h("line", {
+	  return h("g", null, current > minTime ? h("line", {
 	    x1: cur,
 	    x2: cur,
 	    y1: offsetY,
 	    y2: height,
 	    style: styles.cline
-	  }), data.map(function (v, i) {
+	  }) : null, data.map(function (v, i) {
 	    if (!v.end || !v.start) {
 	      return null;
 	    }

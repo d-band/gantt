@@ -9,7 +9,9 @@ export default function Bar({
   const cur = x0 + (current - minTime) / unit;
   return (
     <g>
-      <line x1={cur} x2={cur} y1={offsetY} y2={height} style={styles.cline} />
+      {current > minTime ? (
+        <line x1={cur} x2={cur} y1={offsetY} y2={height} style={styles.cline} />
+      ) : null}
       {data.map((v, i) => {
         if (!v.end || !v.start) {
           return null;
