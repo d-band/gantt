@@ -88,6 +88,8 @@ function walkDates(nodes) {
       node.percent = tmp.percent;
       if (tmp.start && tmp.end) {
         node.duration = (tmp.end - tmp.start) / DAY;
+      } else {
+        node.duration = 0;
       }
     } else {
       node.percent = node.percent || 0;

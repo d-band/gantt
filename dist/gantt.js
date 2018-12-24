@@ -1,8 +1,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	factory(global.Gantt = {});
-}(typeof self !== 'undefined' ? self : this, function (exports) { 'use strict';
+	(global = global || self, factory(global.Gantt = {}));
+}(this, function (exports) { 'use strict';
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -220,6 +220,8 @@
 
 	      if (tmp.start && tmp.end) {
 	        node.duration = (tmp.end - tmp.start) / DAY;
+	      } else {
+	        node.duration = 0;
 	      }
 	    } else {
 	      node.percent = node.percent || 0;
