@@ -4,7 +4,7 @@ import { formatMonth } from '../utils';
 export default function YearMonth({
   styles, dates, unit, offsetY, minTime, maxTime, maxTextWidth
 }) {
-  const months = dates.filter(v => (new Date(v)).getDate() === 1);
+  const months = dates.filter((v) => (new Date(v)).getDate() === 1);
 
   months.unshift(minTime);
   months.push(maxTime);

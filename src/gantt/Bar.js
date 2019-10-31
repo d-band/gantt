@@ -27,7 +27,7 @@ export default function Bar({
             [x + size, cy],
             [x, cy + size],
             [x - size, cy]
-          ].map(p => `${p[0]},${p[1]}`).join(' ');
+          ].map((p) => `${p[0]},${p[1]}`).join(' ');
           return (
             <g key={i} class="gantt-bar" style={{ cursor: 'pointer' }} onClick={handler}>
               <polygon points={points} style={styles.milestone} onClick={handler} />

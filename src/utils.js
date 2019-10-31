@@ -1,7 +1,9 @@
 export const DAY = 24 * 3600 * 1000;
 
 export function addDays(date, days) {
-  return new Date(date.valueOf() + days * DAY);
+  const d = new Date(date.valueOf());
+  d.setDate(d.getDate() + days);
+  return d;
 }
 
 export function getDates(begin, end) {
@@ -56,7 +58,7 @@ export function max(list, defaultValue) {
 }
 
 export function p2s(arr) {
-  return arr.map(p => `${p[0]},${p[1]}`).join(' ');
+  return arr.map((p) => `${p[0]},${p[1]}`).join(' ');
 }
 
 export function s2p(str) {
@@ -177,7 +179,7 @@ export function hasPath(vmap, a, b) {
 export function toposort(links) {
   const vmap = {};
   links.forEach((l) => {
-    const init = id => ({ id, out: [], in: 0 });
+    const init = (id) => ({ id, out: [], in: 0 });
     vmap[l.source] = init(l.source);
     vmap[l.target] = init(l.target);
   });
@@ -187,8 +189,8 @@ export function toposort(links) {
     vmap[l.source].out.push(i);
   }
   const s = Object.keys(vmap)
-    .map(k => vmap[k].id)
-    .filter(id => !vmap[id].in);
+    .map((k) => vmap[k].id)
+    .filter((id) => !vmap[id].in);
   const sorted = [];
   while (s.length) {
     const id = s.pop();

@@ -6,7 +6,7 @@ export default function WeekHeader({
   styles, unit, minTime, maxTime, height, offsetY, maxTextWidth
 }) {
   const dates = getDates(minTime, maxTime);
-  const weeks = dates.filter(v => (new Date(v)).getDay() === 0);
+  const weeks = dates.filter((v) => (new Date(v)).getDay() === 0);
   weeks.push(maxTime);
   const ticks = [];
   const x0 = maxTextWidth;
@@ -24,10 +24,9 @@ export default function WeekHeader({
         <rect x={x - d} y={y0} width={d * 2} height={RH} style={styles.week} />
         <line x1={x} x2={x} y1={offsetY / 2} y2={offsetY} style={styles.line} />
         <text x={x + 3} y={offsetY * 0.75} style={styles.text2}>{curDay}</text>
-        {x - x0 > 28
-          ? <text x={x - 3} y={offsetY * 0.75} style={styles.text1}>{prevDay}</text>
-          : null
-        }
+        {x - x0 > 28 ? (
+          <text x={x - 3} y={offsetY * 0.75} style={styles.text1}>{prevDay}</text>
+        ) : null}
       </g>
     ));
   }

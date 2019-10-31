@@ -13,7 +13,7 @@ export default class CanvasGantt {
     this.format(data);
     this.options = options;
     this.render();
-    this.ctx.onClick = e => this.render(e);
+    this.ctx.onClick = (e) => this.render(e);
   }
   format(data) {
     this.data = data;
@@ -40,7 +40,7 @@ export default class CanvasGantt {
     } = this;
     if (options.maxTextWidth === undefined) {
       const font = getFont(options.styleOptions || {});
-      const w = v => textWidth(v.text, font, 20);
+      const w = (v) => textWidth(v.text, font, 20);
       options.maxTextWidth = max(data.map(w), 0);
     }
     const props = { ...options, start, end };

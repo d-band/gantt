@@ -22,7 +22,7 @@ export default function render(vnode, ctx) {
     let v = props[k];
     if (k === 'onClick') return;
     if (k === 'style' && typeof v === 'object') {
-      v = Object.keys(v).map(i => `${i}:${v[i]};`).join('');
+      v = Object.keys(v).map((i) => `${i}:${v[i]};`).join('');
     }
     tokens.push(` ${k}="${attrEscape(v)}"`);
   });

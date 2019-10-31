@@ -3,7 +3,7 @@ import h from '../h';
 export default function Year({
   styles, months, unit, offsetY, minTime, maxTime, maxTextWidth
 }) {
-  const years = months.filter(v => (new Date(v)).getMonth() === 0);
+  const years = months.filter((v) => (new Date(v)).getMonth() === 0);
 
   years.unshift(minTime);
   years.push(maxTime);
@@ -19,10 +19,9 @@ export default function Year({
     ticks.push((
       <g>
         <line x1={x} x2={x} y1={0} y2={y2} style={styles.line} />
-        {t > 35
-          ? <text x={x + t / 2} y={offsetY * 0.25} style={styles.text3}>{cur.getFullYear()}</text>
-          : null
-        }
+        {t > 35 ? (
+          <text x={x + t / 2} y={offsetY * 0.25} style={styles.text3}>{cur.getFullYear()}</text>
+        ) : null}
       </g>
     ));
   }

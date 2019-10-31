@@ -18,16 +18,14 @@ export default function DayHeader({
     const t = (dates[i + 1] - dates[i]) / unit;
     ticks.push((
       <g>
-        {day === 0 || day === 6
-          ? <rect x={x} y={y0} width={t} height={RH} style={styles.week} />
-          : null
-        }
+        {day === 0 || day === 6 ? (
+          <rect x={x} y={y0} width={t} height={RH} style={styles.week} />
+        ) : null}
         <line x1={x} x2={x} y1={y0} y2={offsetY} style={styles.line} />
         <text x={x + t / 2} y={offsetY * 0.75} style={styles.text3}>{cur.getDate()}</text>
-        {i === len - 1
-          ? <line x1={x + t} x2={x + t} y1={y0} y2={offsetY} style={styles.line} />
-          : null
-        }
+        {i === len - 1 ? (
+          <line x1={x + t} x2={x + t} y1={y0} y2={offsetY} style={styles.line} />
+        ) : null}
       </g>
     ));
   }

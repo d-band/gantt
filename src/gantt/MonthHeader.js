@@ -7,7 +7,7 @@ export default function MonthHeader({
 }) {
   const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const dates = getDates(minTime, maxTime);
-  const months = dates.filter(v => (new Date(v)).getDate() === 1);
+  const months = dates.filter((v) => (new Date(v)).getDate() === 1);
 
   months.unshift(minTime);
   months.push(maxTime);
@@ -24,10 +24,9 @@ export default function MonthHeader({
     ticks.push((
       <g>
         <line x1={x} x2={x} y1={y0} y2={offsetY} style={styles.line} />
-        {t > 30
-          ? <text x={x + t / 2} y={offsetY * 0.75} style={styles.text3}>{MONTH[month]}</text>
-          : null
-        }
+        {t > 30 ? (
+          <text x={x + t / 2} y={offsetY * 0.75} style={styles.text3}>{MONTH[month]}</text>
+        ) : null}
       </g>
     ));
   }

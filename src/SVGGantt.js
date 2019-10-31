@@ -41,7 +41,7 @@ export default class SVGGantt {
     }
     if (options.maxTextWidth === undefined) {
       const font = getFont(options.styleOptions || {});
-      const w = v => textWidth(v.text, font, 20);
+      const w = (v) => textWidth(v.text, font, 20);
       options.maxTextWidth = max(data.map(w), 0);
     }
     const props = { ...options, start, end };

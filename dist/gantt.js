@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(global = global || self, factory(global.Gantt = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -47,27 +47,6 @@
 
 	var defineProperty = _defineProperty;
 
-	function _objectSpread(target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i] != null ? arguments[i] : {};
-	    var ownKeys = Object.keys(source);
-
-	    if (typeof Object.getOwnPropertySymbols === 'function') {
-	      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-	        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-	      }));
-	    }
-
-	    ownKeys.forEach(function (key) {
-	      defineProperty(target, key, source[key]);
-	    });
-	  }
-
-	  return target;
-	}
-
-	var objectSpread = _objectSpread;
-
 	function _classCallCheck(instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
 	    throw new TypeError("Cannot call a class as a function");
@@ -94,6 +73,10 @@
 
 	var createClass = _createClass;
 
+	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 	function addChild(c, childNodes) {
 	  if (c === null || c === undefined) return;
 
@@ -118,7 +101,7 @@
 	  addChild(children, childNodes);
 
 	  if (typeof tag === 'function') {
-	    return tag(objectSpread({}, props, {
+	    return tag(_objectSpread({}, props, {
 	      children: childNodes
 	    }));
 	  }
@@ -130,9 +113,15 @@
 	  };
 	}
 
+	function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 	var DAY = 24 * 3600 * 1000;
 	function addDays(date, days) {
-	  return new Date(date.valueOf() + days * DAY);
+	  var d = new Date(date.valueOf());
+	  d.setDate(d.getDate() + days);
+	  return d;
 	}
 	function getDates(begin, end) {
 	  var dates = [];
@@ -255,7 +244,7 @@
 	  var map = {};
 	  var tmp = tasks.map(function (t, i) {
 	    map[t.id] = i;
-	    return objectSpread({}, t, {
+	    return _objectSpread$1({}, t, {
 	      children: [],
 	      links: []
 	    });
@@ -332,7 +321,7 @@
 	      return {
 	        id: id,
 	        out: [],
-	        in: 0
+	        "in": 0
 	      };
 	    };
 
@@ -342,14 +331,14 @@
 
 	  for (var i = 0; i < links.length; i++) {
 	    var l = links[i];
-	    vmap[l.target].in++;
+	    vmap[l.target]["in"]++;
 	    vmap[l.source].out.push(i);
 	  }
 
 	  var s = Object.keys(vmap).map(function (k) {
 	    return vmap[k].id;
 	  }).filter(function (id) {
-	    return !vmap[id].in;
+	    return !vmap[id]["in"];
 	  });
 	  var sorted = [];
 
@@ -360,9 +349,9 @@
 	    for (var _i = 0; _i < vmap[id].out.length; _i++) {
 	      var index = vmap[id].out[_i];
 	      var v = vmap[links[index].target];
-	      v.in--;
+	      v["in"]--;
 
-	      if (!v.in) {
+	      if (!v["in"]) {
 	        s.push(v.id);
 	      }
 	    }
@@ -461,6 +450,7 @@
 	}
 
 	var utils = /*#__PURE__*/Object.freeze({
+		__proto__: null,
 		DAY: DAY,
 		addDays: addDays,
 		getDates: getDates,
@@ -984,7 +974,7 @@
 	      }).join(' ');
 	      return h("g", {
 	        key: i,
-	        class: "gantt-bar",
+	        "class": "gantt-bar",
 	        style: {
 	          cursor: 'pointer'
 	        },
@@ -994,7 +984,7 @@
 	        style: styles.milestone,
 	        onClick: handler
 	      }), h("circle", {
-	        class: "gantt-ctrl-start",
+	        "class": "gantt-ctrl-start",
 	        "data-id": v.id,
 	        cx: x,
 	        cy: cy,
@@ -1025,7 +1015,7 @@
 
 	    return h("g", {
 	      key: i,
-	      class: "gantt-bar",
+	      "class": "gantt-bar",
 	      style: {
 	        cursor: 'pointer'
 	      },
@@ -1056,14 +1046,14 @@
 	      ry: 1.8,
 	      style: bar.front
 	    }) : null, v.type === 'group' ? null : h("g", null, h("circle", {
-	      class: "gantt-ctrl-start",
+	      "class": "gantt-ctrl-start",
 	      "data-id": v.id,
 	      cx: x - 12,
 	      cy: cy,
 	      r: 6,
 	      style: styles.ctrl
 	    }), h("circle", {
-	      class: "gantt-ctrl-finish",
+	      "class": "gantt-ctrl-finish",
 	      "data-id": v.id,
 	      cx: x + w1 + 12,
 	      cy: cy,
@@ -1072,6 +1062,10 @@
 	    })));
 	  }));
 	}
+
+	function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var SIZE = '14px';
 	var TYPE = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
@@ -1145,21 +1139,21 @@
 	    week: {
 	      fill: 'rgba(252, 248, 227, .6)'
 	    },
-	    box: objectSpread({}, thickLine, {
+	    box: _objectSpread$2({}, thickLine, {
 	      fill: bgColor
 	    }),
 	    line: line,
 	    cline: redLine,
 	    bline: thickLine,
 	    label: text,
-	    groupLabel: objectSpread({}, text, {
+	    groupLabel: _objectSpread$2({}, text, {
 	      'font-weight': '600'
 	    }),
-	    text1: objectSpread({}, text, smallText, {
+	    text1: _objectSpread$2({}, text, {}, smallText, {
 	      'text-anchor': 'end'
 	    }),
-	    text2: objectSpread({}, text, smallText),
-	    text3: objectSpread({}, text, smallText, {
+	    text2: _objectSpread$2({}, text, {}, smallText),
+	    text3: _objectSpread$2({}, text, {}, smallText, {
 	      'text-anchor': 'middle'
 	    }),
 	    link: {
@@ -1369,10 +1363,14 @@
 	  }
 
 	  children.forEach(function (v) {
-	    node.appendChild(typeof v === 'string' ? doc.createTextNode(v) : render(v, ctx));
+	    node.appendChild(typeof v === 'string' ? doc.createTextNode(v) : render(v));
 	  });
 	  return node;
 	}
+
+	function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var SVGGantt =
 	/*#__PURE__*/
@@ -1410,12 +1408,12 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = objectSpread({}, this.options, options);
+	      this.options = _objectSpread$3({}, this.options, {}, options);
 	      this.render();
 	    }
 	  }, {
 	    key: "render",
-	    value: function render$$1() {
+	    value: function render$1() {
 	      var data = this.data,
 	          start = this.start,
 	          end = this.end,
@@ -1435,7 +1433,7 @@
 	        options.maxTextWidth = max(data.map(w), 0);
 	      }
 
-	      var props = objectSpread({}, options, {
+	      var props = _objectSpread$3({}, options, {
 	        start: start,
 	        end: end
 	      });
@@ -1619,6 +1617,10 @@
 	  return ctx;
 	}
 
+	function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 	var CanvasGantt =
 	/*#__PURE__*/
 	function () {
@@ -1661,7 +1663,7 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = objectSpread({}, this.options, options);
+	      this.options = _objectSpread$4({}, this.options, {}, options);
 	      this.render();
 	    }
 	  }, {
@@ -1682,7 +1684,7 @@
 	        options.maxTextWidth = max(data.map(w), 0);
 	      }
 
-	      var props = objectSpread({}, options, {
+	      var props = _objectSpread$4({}, options, {
 	        start: start,
 	        end: end
 	      });
@@ -1733,12 +1735,16 @@
 	    if (typeof v === 'string') {
 	      tokens.push(escape(v));
 	    } else {
-	      tokens.push(render$2(v, ctx));
+	      tokens.push(render$2(v));
 	    }
 	  });
 	  tokens.push("</".concat(tag, ">"));
 	  return tokens.join('');
 	}
+
+	function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var StrGantt =
 	/*#__PURE__*/
@@ -1773,7 +1779,7 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = objectSpread({}, this.options, options);
+	      this.options = _objectSpread$5({}, this.options, {}, options);
 	    }
 	  }, {
 	    key: "render",
@@ -1783,7 +1789,7 @@
 	          end = this.end,
 	          options = this.options;
 
-	      var props = objectSpread({}, options, {
+	      var props = _objectSpread$5({}, options, {
 	        start: start,
 	        end: end
 	      });
@@ -1797,12 +1803,12 @@
 	  return StrGantt;
 	}();
 
-	exports.default = CanvasGantt;
-	exports.SVGGantt = SVGGantt;
 	exports.CanvasGantt = CanvasGantt;
+	exports.SVGGantt = SVGGantt;
 	exports.StrGantt = StrGantt;
+	exports.default = CanvasGantt;
 	exports.utils = utils;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
