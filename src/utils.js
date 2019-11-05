@@ -239,6 +239,7 @@ export function autoSchedule(tasks, links, lockMilestone = false) {
   });
   sorted.forEach((id) => {
     const task = tasks[tmap[id]];
+    if (!task) return;
     const days = task.duration || 0;
     if (lockMilestone && task.type === 'milestone') {
       return;
@@ -248,7 +249,7 @@ export function autoSchedule(tasks, links, lockMilestone = false) {
     for (let i = 0; i < ins[id].length; i++) {
       const l = ins[id][i];
       const v = tasks[tmap[l.source]];
-      if (v.start) {
+      if (v && v.start) {
         const s = addDays(v.start, l.lag || 0);
         const e = addDays(s, v.duration || 0);
         if (l.type === 'SS') {

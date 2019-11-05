@@ -1,6 +1,6 @@
 {
   "name": "gantt",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Gantt chart library using jsx support SVG, Canvas and SSR",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -57,11 +57,11 @@
     "eslint-plugin-react": "^7.16.0",
     "gh-pages": "^2.1.1",
     "rimraf": "^3.0.0",
-    "rollup": "^1.26.0",
+    "rollup": "^1.26.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "uglify-js": "^3.6.5"
+    "uglify-js": "^3.6.7"
   },
   "dependencies": {
     "eslint-plugin-react-hooks": "^1.7.0"
