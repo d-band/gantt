@@ -404,6 +404,7 @@
 	  });
 	  sorted.forEach(function (id) {
 	    var task = tasks[tmap[id]];
+	    if (!task) return;
 	    var days = task.duration || 0;
 
 	    if (lockMilestone && task.type === 'milestone') {
@@ -417,7 +418,7 @@
 	      var l = ins[id][_i2];
 	      var v = tasks[tmap[l.source]];
 
-	      if (v.start) {
+	      if (v && v.start) {
 	        var s = addDays(v.start, l.lag || 0);
 	        var e = addDays(s, v.duration || 0);
 
