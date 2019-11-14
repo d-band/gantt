@@ -64,6 +64,6 @@
     "uglify-js": "^3.6.7"
   },
   "dependencies": {
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^2.3.0"
   }
 }
