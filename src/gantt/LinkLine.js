@@ -13,7 +13,7 @@ export default function LinkLine({
   return (
     <g>
       {data.map((s, i) => {
-        if (!s.end || !s.start) {
+        if (!s.end || !s.start || !s.links) {
           return null;
         }
         return s.links.map((l) => {

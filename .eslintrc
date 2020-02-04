@@ -8,9 +8,10 @@ env:
 settings:
   react:
     pragma: h
+    version: latest
 
 rules:
-  max-len: ["error", 160]
+  max-len: [2, 160]
   camelcase: 0
   no-plusplus: 0
   no-return-await: 0

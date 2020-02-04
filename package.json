@@ -1,6 +1,6 @@
 {
   "name": "gantt",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Gantt chart library using jsx support SVG, Canvas and SSR",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -18,7 +18,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d es",
     "build:dist": "cross-env NODE_ENV=production rollup -c && uglifyjs -o dist/gantt.min.js dist/gantt.js",
     "build": "npm run clean && npm run build:lib && npm run build:es && npm run build:dist",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "pages": "cd demo && dool build && gh-pages -d ."
   },
   "repository": {
@@ -41,29 +41,27 @@
   },
   "homepage": "https://github.com/d-band/gantt#readme",
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-external-helpers": "^7.2.0",
-    "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/runtime": "^7.6.3",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-external-helpers": "^7.8.3",
+    "@babel/plugin-transform-react-jsx": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "babel-eslint": "^10.0.3",
-    "cross-env": "^6.0.3",
-    "eslint": "^6.6.0",
+    "cross-env": "^7.0.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "gh-pages": "^2.1.1",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.26.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "gh-pages": "^2.2.0",
+    "rimraf": "^3.0.1",
+    "rollup": "^1.31.0",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "uglify-js": "^3.6.7"
-  },
-  "dependencies": {
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "uglify-js": "^3.7.7"
   }
 }
