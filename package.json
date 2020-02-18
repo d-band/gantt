@@ -62,6 +62,6 @@
     "rimraf": "^3.0.1",
     "rollup": "^1.31.0",
     "rollup-plugin-babel": "^4.3.3",
-    "uglify-js": "^3.7.7"
+    "uglify-js": "^3.8.0"
   }
 }
