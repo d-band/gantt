@@ -1128,7 +1128,9 @@
 	      _ref2$smallFontSize = _ref2.smallFontSize,
 	      smallFontSize = _ref2$smallFontSize === void 0 ? '12px' : _ref2$smallFontSize,
 	      _ref2$fontFamily = _ref2.fontFamily,
-	      fontFamily = _ref2$fontFamily === void 0 ? TYPE : _ref2$fontFamily;
+	      fontFamily = _ref2$fontFamily === void 0 ? TYPE : _ref2$fontFamily,
+	      _ref2$whiteSpace = _ref2.whiteSpace,
+	      whiteSpace = _ref2$whiteSpace === void 0 ? 'pre' : _ref2$whiteSpace;
 	  var line = {
 	    stroke: lineColor,
 	    'stroke-width': lineWidth
@@ -1145,7 +1147,8 @@
 	    fill: textColor,
 	    'dominant-baseline': 'central',
 	    'font-size': fontSize,
-	    'font-family': fontFamily
+	    'font-family': fontFamily,
+	    'white-space': whiteSpace
 	  };
 	  var smallText = {
 	    fill: lightTextColor,
