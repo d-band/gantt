@@ -26,7 +26,8 @@ export default function getStyles({
   thickLineWidth = '1.4px',
   fontSize = SIZE,
   smallFontSize = '12px',
-  fontFamily = TYPE
+  fontFamily = TYPE,
+  whiteSpace = 'pre'
 }) {
   const line = {
     stroke: lineColor,
@@ -44,7 +45,8 @@ export default function getStyles({
     fill: textColor,
     'dominant-baseline': 'central',
     'font-size': fontSize,
-    'font-family': fontFamily
+    'font-family': fontFamily,
+    'white-space': whiteSpace
   };
   const smallText = {
     fill: lightTextColor,

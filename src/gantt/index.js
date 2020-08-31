@@ -97,6 +97,7 @@ export default function Gantt({
         <Labels
           styles={styles}
           data={data}
+          onClick={onClick}
           offsetY={offsetY}
           rowHeight={rowHeight}
         />
@@ -110,7 +111,6 @@ export default function Gantt({
           current={current}
           offsetY={offsetY}
           minTime={minTime}
-          onClick={onClick}
           rowHeight={rowHeight}
           barHeight={barHeight}
           maxTextWidth={maxTextWidth}

@@ -1,11 +1,21 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global.Gantt = {}));
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Gantt = {}));
 }(this, (function (exports) { 'use strict';
 
-	function createCommonjsModule(fn, module) {
-		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	function createCommonjsModule(fn, basedir, module) {
+		return module = {
+		  path: basedir,
+		  exports: {},
+		  require: function (path, base) {
+	      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+	    }
+		}, fn(module, module.exports), module.exports;
+	}
+
+	function commonjsRequire () {
+		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 	}
 
 	var _extends_1 = createCommonjsModule(function (module) {
@@ -101,7 +111,7 @@
 	  addChild(children, childNodes);
 
 	  if (typeof tag === 'function') {
-	    return tag(_objectSpread({}, props, {
+	    return tag(_objectSpread(_objectSpread({}, props), {}, {
 	      children: childNodes
 	    }));
 	  }
@@ -244,7 +254,7 @@
 	  var map = {};
 	  var tmp = tasks.map(function (t, i) {
 	    map[t.id] = i;
-	    return _objectSpread$1({}, t, {
+	    return _objectSpread$1(_objectSpread$1({}, t), {}, {
 	      children: [],
 	      links: []
 	    });
@@ -770,6 +780,7 @@
 	function Labels(_ref) {
 	  var styles = _ref.styles,
 	      data = _ref.data,
+	      _onClick = _ref.onClick,
 	      rowHeight = _ref.rowHeight,
 	      offsetY = _ref.offsetY;
 	  return h("g", null, data.map(function (v, i) {
@@ -777,7 +788,11 @@
 	      key: i,
 	      x: 10,
 	      y: (i + 0.5) * rowHeight + offsetY,
-	      style: styles.label
+	      "class": "gantt-label",
+	      style: styles.label,
+	      onClick: function onClick() {
+	        return _onClick(v);
+	      }
 	    }, v.text);
 	  }));
 	}
@@ -1140,21 +1155,21 @@
 	    week: {
 	      fill: 'rgba(252, 248, 227, .6)'
 	    },
-	    box: _objectSpread$2({}, thickLine, {
+	    box: _objectSpread$2(_objectSpread$2({}, thickLine), {}, {
 	      fill: bgColor
 	    }),
 	    line: line,
 	    cline: redLine,
 	    bline: thickLine,
 	    label: text,
-	    groupLabel: _objectSpread$2({}, text, {
+	    groupLabel: _objectSpread$2(_objectSpread$2({}, text), {}, {
 	      'font-weight': '600'
 	    }),
-	    text1: _objectSpread$2({}, text, {}, smallText, {
+	    text1: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, text), smallText), {}, {
 	      'text-anchor': 'end'
 	    }),
-	    text2: _objectSpread$2({}, text, {}, smallText),
-	    text3: _objectSpread$2({}, text, {}, smallText, {
+	    text2: _objectSpread$2(_objectSpread$2({}, text), smallText),
+	    text3: _objectSpread$2(_objectSpread$2(_objectSpread$2({}, text), smallText), {}, {
 	      'text-anchor': 'middle'
 	    }),
 	    link: {
@@ -1281,6 +1296,7 @@
 	  }), maxTextWidth > 0 ? h(Labels, {
 	    styles: styles,
 	    data: data,
+	    onClick: onClick,
 	    offsetY: offsetY,
 	    rowHeight: rowHeight
 	  }) : null, showLinks ? h(LinkLine, {
@@ -1291,7 +1307,6 @@
 	    current: current,
 	    offsetY: offsetY,
 	    minTime: minTime,
-	    onClick: onClick,
 	    rowHeight: rowHeight,
 	    barHeight: barHeight,
 	    maxTextWidth: maxTextWidth
@@ -1344,7 +1359,7 @@
 	        node.style[sk] = v[sk];
 	      });
 	    } else if (k === 'onClick') {
-	      if (typeof v === 'function' && node.tagName === 'g') {
+	      if (typeof v === 'function') {
 	        node.addEventListener('click', v);
 	      }
 	    } else {
@@ -1373,9 +1388,7 @@
 
 	function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-	var SVGGantt =
-	/*#__PURE__*/
-	function () {
+	var SVGGantt = /*#__PURE__*/function () {
 	  function SVGGantt(element, data) {
 	    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
@@ -1409,7 +1422,7 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = _objectSpread$3({}, this.options, {}, options);
+	      this.options = _objectSpread$3(_objectSpread$3({}, this.options), options);
 	      this.render();
 	    }
 	  }, {
@@ -1434,7 +1447,7 @@
 	        options.maxTextWidth = max(data.map(w), 0);
 	      }
 
-	      var props = _objectSpread$3({}, options, {
+	      var props = _objectSpread$3(_objectSpread$3({}, options), {}, {
 	        start: start,
 	        end: end
 	      });
@@ -1622,9 +1635,7 @@
 
 	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-	var CanvasGantt =
-	/*#__PURE__*/
-	function () {
+	var CanvasGantt = /*#__PURE__*/function () {
 	  function CanvasGantt(element, data) {
 	    var _this = this;
 
@@ -1664,7 +1675,7 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = _objectSpread$4({}, this.options, {}, options);
+	      this.options = _objectSpread$4(_objectSpread$4({}, this.options), options);
 	      this.render();
 	    }
 	  }, {
@@ -1685,7 +1696,7 @@
 	        options.maxTextWidth = max(data.map(w), 0);
 	      }
 
-	      var props = _objectSpread$4({}, options, {
+	      var props = _objectSpread$4(_objectSpread$4({}, options), {}, {
 	        start: start,
 	        end: end
 	      });
@@ -1747,9 +1758,7 @@
 
 	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-	var StrGantt =
-	/*#__PURE__*/
-	function () {
+	var StrGantt = /*#__PURE__*/function () {
 	  function StrGantt(data) {
 	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -1780,7 +1789,7 @@
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.options = _objectSpread$5({}, this.options, {}, options);
+	      this.options = _objectSpread$5(_objectSpread$5({}, this.options), options);
 	    }
 	  }, {
 	    key: "render",
@@ -1790,7 +1799,7 @@
 	          end = this.end,
 	          options = this.options;
 
-	      var props = _objectSpread$5({}, options, {
+	      var props = _objectSpread$5(_objectSpread$5({}, options), {}, {
 	        start: start,
 	        end: end
 	      });

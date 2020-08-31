@@ -10,7 +10,7 @@ function applyProperties(node, props) {
         node.style[sk] = v[sk];
       });
     } else if (k === 'onClick') {
-      if (typeof v === 'function' && node.tagName === 'g') {
+      if (typeof v === 'function') {
         node.addEventListener('click', v);
       }
     } else {

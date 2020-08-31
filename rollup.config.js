@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
@@ -29,8 +29,7 @@ export default {
         '@babel/plugin-external-helpers',
         '@babel/plugin-transform-runtime'
       ],
-      runtimeHelpers: true,
-      externalHelpers: true,
+      babelHelpers: 'runtime',
       exclude: 'node_modules/**'
     })
   ]
