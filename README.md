@@ -64,37 +64,74 @@ this.body = strGantt.render();
 
 ![image](demo/image.png)
 
-## Options
+## API
 
-```javascript
-{
-  // View mode: day/week/month
-  viewMode: 'week',
-  onClick: (item) => {},
-  offsetY: 60,
-  rowHeight: 40,
-  barHeight: 16,
-  thickWidth: 1.4,
-  styleOptions: {
-    bgColor: '#fff',
-    lineColor: '#eee',
-    redLineColor: '#f04134',
-    groupBack: '#3db9d3',
-    groupFront: '#299cb4',
-    taskBack: '#65c16f',
-    taskFront: '#46ad51',
-    milestone: '#d33daf',
-    warning: '#faad14',
-    danger: '#f5222d',
-    link: '#ffa011',
-    textColor: '#222',
-    lightTextColor: '#999',
-    lineWidth: '1px',
-    thickLineWidth: '1.4px',
-    fontSize: '14px',
-    smallFontSize: '12px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-  }
+```typescript
+interface Link {
+  target: number,
+  type: 'FS' | 'FF' | 'SS' | 'SF'
+}
+
+interface Item {
+  id: number,
+  parent: number,
+  text: string,
+  start: Date,
+  end: Date,
+  percent: number,
+  links: Array<Link>
+}
+
+type StyleOptions = {
+  bgColor: string,           // default: '#fff'
+  lineColor: string,         // default: '#eee'
+  redLineColor: string,      // default: '#f04134'
+  groupBack: string,         // default: '#3db9d3'
+  groupFront: string,        // default: '#299cb4'
+  taskBack: string,          // default: '#65c16f'
+  taskFront: string,         // default: '#46ad51'
+  milestone: string,         // default: '#d33daf'
+  warning: string,           // default: '#faad14'
+  danger: string,            // default: '#f5222d'
+  link: string,              // default: '#ffa011'
+  textColor: string,         // default: '#222'
+  lightTextColor: string,    // default: '#999'
+  lineWidth: string,         // default: '1px'
+  thickLineWidth: string,    // default: '1.4px'
+  fontSize: string,          // default: '14px'
+  smallFontSize: string,     // default: '12px'
+  fontFamily: string,        // default: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+}
+
+type Options = {
+  viewMode: 'day' | 'week' | 'month',
+  onClick: (item: Item) => {},
+  offsetY: number,               // default: 60,
+  rowHeight: number,             // default: 40,
+  barHeight: number,             // default: 16,
+  thickWidth: number,            // default: 1.4,
+  styleOptions: StyleOptions
+}
+
+declare class SVGGantt {
+  constructor(element: string | HTMLElement, data: Array<Item>, options: Options);
+  setData(data: Array<Item>): void;      // set data and re-render
+  setOptions(options: Options): void;    // set options and re-render
+  render(): void;
+}
+
+declare class CanvasGantt {
+  constructor(element: string | HTMLElement, data: Array<Item>, options: Options);
+  setData(data: Array<Item>): void;      // set data and re-render
+  setOptions(options: Options): void;    // set options and re-render
+  render(): void;
+}
+
+declare class StrGantt {
+  constructor(data: Array<Item>, options: Options);
+  setData(data: Array<Item>): void;
+  setOptions(options: Options): void;
+  render(): string;
 }
 ```
 
