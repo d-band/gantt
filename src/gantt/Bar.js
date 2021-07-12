@@ -46,10 +46,10 @@ export default function Bar({
         };
         if (showDelay) {
           if ((x + w2) < cur && v.percent < 0.999999) {
-            bar.front = styles.warning;
+            bar.back = styles.warning;
           }
           if ((x + w1) < cur && v.percent < 0.999999) {
-            bar.front = styles.danger;
+            bar.back = styles.danger;
           }
         }
         return (
